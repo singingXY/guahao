@@ -108,6 +108,7 @@
             </el-option>
           </el-select>
         </el-form-item>
+
         <input
           type="hidden"
           name="url"
@@ -116,13 +117,19 @@
         />
         <input
           type="hidden"
+          name="now"
+          id="now"
+          v-model="new Date().toLocaleString()"
+        />
+        <input
+          type="hidden"
           name="dede_fields"
-          value="name,text;tel,text;time,text;doctor,text;url,text;keshi,text"
+          value="name,text;tel,text;time,text;doctor,text;url,text;keshi,text;now,text"
         />
         <input
           type="hidden"
           name="dede_fieldshash"
-          value="e2a3ba33e85e6fdba51d888c40a134d2"
+          value="2bf7f7aa2800368824331d5e3966fc13"
         />
         <p class="bd-p"><img src="./images/lock.png" alt="" /> 隐私保护</p>
         <el-row type="flex" justify="space-around">
