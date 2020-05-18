@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+
+    <title>苏州同济医院_同济官网在线预约</title>
+    <link href="layout.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/rem.js"></script>
+    <style>
+      .table .tr {
+        height: 2.6rem;
+      }
+      .table .table-head {
+        height: 3.5rem;
+      }
+      .table .td a {
+        color: #2d8ed3;
+      }
+      .table .td span {
+        font-weight: normal;
+      }
+    </style>
+  </head>
+
+  <body class="index">
+    <header>
+      <img src="./images/ptmz_01.png" alt="" />
+      <img src="./images/ptmz_02.jpg" alt="" />
+      <img class="qr" src="./images/qr.png" alt="" />
+    </header>
+
+    <h5 class="title">同济医院普通门诊出诊信息</h5>
+    <div class="table">
+      <div class="table-left" id="tableLeft">
+        <div class="tr"></div>
+      </div>
+      <div class="table-right">
+        <div class="tr table-head">
+          <div class="td">
+            星期一
+            <p>5月18日</p>
+          </div>
+          <div class="td">
+            星期二
+            <p>5月29日</p>
+          </div>
+          <div class="td">
+            星期三
+            <p>5月20日</p>
+          </div>
+          <div class="td">
+            星期四
+            <p>5月21日</p>
+          </div>
+          <div class="td">
+            星期五
+            <p>5月22日</p>
+          </div>
+          <div class="td">
+            星期六
+            <p>5月23日</p>
+          </div>
+          <div class="td">
+            星期日
+            <p>5月24日</p>
+          </div>
+        </div>
+        <div id="content"></div>
+      </div>
+    </div>
+    <img class="allied" src="./images/dw.png" alt="" />
+
+    <script>
+      var outpatient = [
+        '康复医学科',
+        '肿瘤科',
+        '神经内科',
+        '呼吸内科',
+        '消化内科',
+        '心血管内科',
+        '泌尿外科',
+        '结石科',
+        '中医肛肠科',
+        '妇科',
+        '计划生育门诊',
+        '不孕门诊',
+      ]
+
+      for (let i = 0; i < outpatient.length; i++) {
+        document.getElementById('tableLeft').innerHTML +=
+          '<div class="tr">' + outpatient[i] + '</div>'
+      }
+      for (let i = 0; i < List.length; i++) {
+        document.getElementById('content').innerHTML +=
+          '<div id="ks_' + i + '" class="tr"></div>'
+      }
+      function notEmpty(e) {
+        if (e) {
+          return e
+        } else {
+          return ' '
+        }
+      }
+    </script>
+  </body>
+</html>
