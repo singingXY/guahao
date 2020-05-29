@@ -1,127 +1,132 @@
 <!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
-    />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="telephone=no" name="format-detection" />
 
-    <title>苏州同济医院_同济官网在线预约</title>
-    <link href="layout.css" rel="stylesheet" type="text/css" />
-    <script src="js/jquery.min.js"></script>
-    <script src="js/rem.js"></script>
-    <style>
-      .table .tr {
-        height: 2.6rem;
-      }
-      .table .table-head {
-        height: 3.5rem;
-      }
-      .table-left .tr {
-        font-weight: normal;
-      }
-      .table .tr .td {
-        font-weight: bold;
-      }
-      .table .td a {
-        color: #000;
-      }
-      .table .td span {
-        font-weight: normal;
-      }
-    </style>
-  </head>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="telephone=no" name="format-detection" />
 
-  <body class="index">
-    <header>
-      <img src="./images/logo_xcx.jpg" alt="" />
-      <img src="./images/ban.jpg" alt="" />
-      <img class="qr" src="./images/qr.png" alt="" />
-    </header>
+  <title>苏州同济医院_同济官网在线预约</title>
+  <link href="layout.css" rel="stylesheet" type="text/css" />
+  <script src="js/jquery.min.js"></script>
+  <script src="js/rem.js"></script>
+  <style>
+    .table .tr {
+      height: 2.6rem;
+    }
 
-    <h5 class="title">同济医院特需门诊专家出诊信息</h5>
-    <div class="table">
-      <div class="table-left" id="tableLeft">
-        <div class="tr"></div>
-      </div>
-      <div class="table-right">
-        <div class="tr table-head">
-          <div class="td">
-            星期一
-            <p>5月25日</p>
-          </div>
-          <div class="td">
-            星期二
-            <p>5月26日</p>
-          </div>
-          <div class="td">
-            星期三
-            <p>5月27日</p>
-          </div>
-          <div class="td">
-            星期四
-            <p>5月28日</p>
-          </div>
-          <div class="td">
-            星期五
-            <p>5月29日</p>
-          </div>
-          <div class="td">
-            星期六
-            <p>5月30日</p>
-          </div>
-          <div class="td">
-            星期日
-            <p>5月31日</p>
-          </div>
-        </div>
-        <div id="content"></div>
-      </div>
+    .table .table-head {
+      height: 3.5rem;
+    }
+
+    .table-left .tr {
+      font-weight: normal;
+    }
+
+    .table .tr .td {
+      font-weight: bold;
+    }
+
+    .table .td a {
+      color: #000;
+    }
+
+    .table .td span {
+      font-weight: normal;
+    }
+  </style>
+</head>
+
+<body class="index">
+  <header>
+    <img src="./images/logo_xcx.jpg" alt="" />
+    <img src="./images/ban.jpg" alt="" />
+    <img class="qr" src="./images/qr.png" alt="" />
+  </header>
+
+  <h5 class="title">同济医院特需门诊专家出诊信息</h5>
+  <div class="table">
+    <div class="table-left" id="tableLeft">
+      <div class="tr"></div>
     </div>
-    <img class="allied" src="./images/dw.png" alt="" />
-    <script src="js/indexList.js"></script>
-    <script>
-      for (let i = 0; i < department.length; i++) {
-        document.getElementById('tableLeft').innerHTML +=
-          '<div class="tr">' + department[i] + '</div>'
-      }
-      for (let i = 0; i < List.length; i++) {
-        document.getElementById('content').innerHTML +=
-          '<div id="ks_' + i + '" class="tr"></div>'
-        for (let j = 0; j < List[i].length; j++) {
-          if (List[i][j][3]) {
-            document.getElementById('ks_' + i).innerHTML +=
-              '<div class="td"><a href="/gh/index_xcx.html?zj=' +
-              List[i][j][0] +
-              '">' +
-              notEmpty(List[i][j][1]) +
-              '</a><br><a href="/gh/index_xcx.html?zj=' +
-              List[i][j][3] +
-              '">' +
-              notEmpty(List[i][j][4]) +
-              '</a></div>'
-          } else {
-            document.getElementById('ks_' + i).innerHTML +=
-              '<div class="td"><a href="/gh/index_xcx.html?zj=' +
-              List[i][j][0] +
-              '">' +
-              notEmpty(List[i][j][1]) +
-              '<br><span>' +
-              notEmpty(List[i][j][2]) +
-              '</span></a></div>'
-          }
-        }
-      }
-      function notEmpty(e) {
-        if (e) {
-          return e
+    <div class="table-right">
+      <div class="tr table-head">
+        <div class="td">
+          星期一
+          <p>5月25日</p>
+        </div>
+        <div class="td">
+          星期二
+          <p>5月26日</p>
+        </div>
+        <div class="td">
+          星期三
+          <p>5月27日</p>
+        </div>
+        <div class="td">
+          星期四
+          <p>5月28日</p>
+        </div>
+        <div class="td">
+          星期五
+          <p>5月29日</p>
+        </div>
+        <div class="td">
+          星期六
+          <p>5月30日</p>
+        </div>
+        <div class="td">
+          星期日
+          <p>5月31日</p>
+        </div>
+      </div>
+      <div id="content"></div>
+    </div>
+  </div>
+  <img class="allied" src="./images/dw.png" alt="" />
+  <script src="js/indexList.js"></script>
+  <script>
+    for (let i = 0; i < department.length; i++) {
+      document.getElementById('tableLeft').innerHTML +=
+        '<div class="tr">' + department[i] + '</div>'
+    }
+    for (let i = 0; i < List.length; i++) {
+      document.getElementById('content').innerHTML +=
+        '<div id="ks_' + i + '" class="tr"></div>'
+      for (let j = 0; j < List[i].length; j++) {
+        if (List[i][j][3]) {
+          document.getElementById('ks_' + i).innerHTML +=
+            '<div class="td"><a href="/gh/index_xcx.html?zj=' +
+            List[i][j][0] +
+            '">' +
+            notEmpty(List[i][j][1]) +
+            '</a><br><a href="/gh/index_xcx.html?zj=' +
+            List[i][j][3] +
+            '">' +
+            notEmpty(List[i][j][4]) +
+            '</a></div>'
         } else {
-          return ' '
+          document.getElementById('ks_' + i).innerHTML +=
+            '<div class="td"><a href="/gh/index_xcx.html?zj=' +
+            List[i][j][0] +
+            '">' +
+            notEmpty(List[i][j][1]) +
+            '<br><span>' +
+            notEmpty(List[i][j][2]) +
+            '</span></a></div>'
         }
       }
-    </script>
-  </body>
+    }
+    function notEmpty(e) {
+      if (e) {
+        return e
+      } else {
+        return ' '
+      }
+    }
+  </script>
+</body>
+
 </html>
