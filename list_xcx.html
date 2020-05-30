@@ -52,42 +52,27 @@
       <div class="tr"></div>
     </div>
     <div class="table-right">
-      <div class="tr table-head">
-        <div class="td">
-          星期一
-          <p>5月25日</p>
-        </div>
-        <div class="td">
-          星期二
-          <p>5月26日</p>
-        </div>
-        <div class="td">
-          星期三
-          <p>5月27日</p>
-        </div>
-        <div class="td">
-          星期四
-          <p>5月28日</p>
-        </div>
-        <div class="td">
-          星期五
-          <p>5月29日</p>
-        </div>
-        <div class="td">
-          星期六
-          <p>5月30日</p>
-        </div>
-        <div class="td">
-          星期日
-          <p>5月31日</p>
-        </div>
-      </div>
+      <div class="tr table-head" id="tableHead"></div>
       <div id="content"></div>
     </div>
   </div>
   <img class="allied" src="./images/dw.png" alt="" />
+  <div class="bottom">
+    <a class="tx active" href="/gh/list_xcx.html">
+      <img src="./images/tx.png" alt=""> 特需专家号</a>
+    <a class="pt" href="/gh/list.html">
+      <img src="./images/pt2.png" alt=""> 普通门诊号</a>
+  </div>
   <script src="js/indexList.js"></script>
   <script>
+
+    var th = ''
+    for (let i = 0; i < 7; i++) {
+      var aWeekArr = aWeek[i].split('-')
+      th += '<div class="td">' + weekText[i] + '<p>' + aWeekArr[0] + '月' + aWeekArr[1] + '日</p></div>'
+    }
+    document.getElementById('tableHead').innerHTML = th
+
     for (let i = 0; i < department.length; i++) {
       document.getElementById('tableLeft').innerHTML +=
         '<div class="tr">' + department[i] + '</div>'
@@ -98,18 +83,18 @@
       for (let j = 0; j < List[i].length; j++) {
         if (List[i][j][3]) {
           document.getElementById('ks_' + i).innerHTML +=
-            '<div class="td"><a href="/gh/index_xcx.html?zj=' +
+            '<div class="td"><a href="/gh/index_tx.html?zj=' +
             List[i][j][0] +
             '">' +
             notEmpty(List[i][j][1]) +
-            '</a><br><a href="/gh/index_xcx.html?zj=' +
+            '</a><br><a href="/gh/index_tx.html?zj=' +
             List[i][j][3] +
             '">' +
             notEmpty(List[i][j][4]) +
             '</a></div>'
         } else {
           document.getElementById('ks_' + i).innerHTML +=
-            '<div class="td"><a href="/gh/index_xcx.html?zj=' +
+            '<div class="td"><a href="/gh/index_tx.html?zj=' +
             List[i][j][0] +
             '">' +
             notEmpty(List[i][j][1]) +

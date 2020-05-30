@@ -19,44 +19,38 @@
 
 <body>
   <div id="app">
-    <!-- <header>
-        <img src="./images/logo_xcx.jpg" alt="" />
-      </header> -->
-    <div class="zjban">
-      <el-image :src="'img/' + this.zj + '.jpg'" :preview-src-list="this.zj ? ['img/'+ this.zj+'-b.jpg'] : ''"
-        :onerror="defaultImg"></el-image>
-    </div>
+    <header>
+      <img src="./images/logo_xcx.jpg" alt="" />
+      <img src="./images/ptmz_02.jpg" alt="" />
+    </header>
     <h5 class="title">苏州同济医院预约挂号中心</h5>
-    <el-form class="bd" label-position="right">
+    <el-form class="bd" label-position="right" id="gh_form" action="/plus/diy.php" enctype="multipart/form-data"
+      method="post">
+      <input type="hidden" name="action" value="post" />
+      <input type="hidden" name="diyid" value="1" />
+      <input type="hidden" name="do" value="2" />
       <el-form-item label="">
-        <el-input id="tj_txtname" v-model="uname" placeholder="请输入您的姓名"></el-input>
+        <el-input id="name" v-model="name" placeholder="请输入您的姓名"></el-input>
       </el-form-item>
       <el-form-item label="">
-        <el-input id="tj_txtphone" type="number" v-model="uphone" minlength="7" placeholder="请输入您的电话号码"></el-input>
+        <el-input name="tel" id="tel" type="number" v-model="tel" minlength="7" placeholder="请输入您的电话号码"></el-input>
       </el-form-item>
-      <p class="bd-keshi" id="tj_keshi" v-if="zjList[this.zj]">{{zjList[this.zj][1]}}</p>
-      <ul class="visit-date">
-        <li v-for="(date,index) in zzTime" v-if="currentDate(date)" @click="changeIndex(index,date)"
-          :class="{active:currentIndex===index}">
-          {{ weekDay(date) }}<br />
-          {{ toDay(date)}}<br />有号
-        </li>
-      </ul>
-      <el-form-item label="" style="display:none">
-        <el-input id="tj_txtday" readonly placeholder="请选择预约日期" suffix-icon="el-icon-date" v-model="uday"
+      <el-form-item label="">
+        <el-input name="keshi" id="keshi" v-model="keshi" readonly></el-input>
+      </el-form-item>
+      <el-form-item label="">
+        <el-input name="time" id="time" readonly placeholder="请选择预约日期" suffix-icon="el-icon-date" v-model="uday"
           @focus="dialogVisible = true">
         </el-input>
       </el-form-item>
-      <el-form-item label="" class="sele-zj">
-        <el-select id="tj_txtdoctor" v-model="this.zj" placeholder="请选择专家" @change="onChange($event)">
-          <el-option disabled value="">请选择专家</el-option>
-          <el-option v-for="(value, name) in zjList" :key="name" :label="value[0]" :value="name">
-          </el-option>
-        </el-select>
-      </el-form-item>
+      <input type="hidden" name="url" id="url" v-model="document.location.href" />
+      <input type="hidden" name="now" id="now" v-model="new Date().toLocaleString()" />
+      <input type="hidden" name="dede_fields"
+        value="name,text;tel,text;time,text;doctor,text;url,text;keshi,text;now,text" />
+      <input type="hidden" name="dede_fieldshash" value="2bf7f7aa2800368824331d5e3966fc13" />
       <p class="bd-p"><img src="./images/lock.png" alt="" /> 隐私保护</p>
       <el-row type="flex" justify="space-around">
-        <el-button id="tj_butsav" onclick="return addvalygbb();">提交挂号</el-button>
+        <input type="submit" value="提交挂号" class="submit-form" onclick="return submitForm()" />
       </el-row>
     </el-form>
     <p class="tips">
@@ -64,50 +58,37 @@
       通过网络就诊的患者请留下正确的联系方式，客服人员会及时与您联系！
     </p>
     <img class="allied" src="./images/dw.png" alt="" />
-    <!-- <el-dialog title="选择预约日期" :visible.sync="dialogVisible">
-        <el-calendar>
-          <template slot="dateCell" slot-scope="{date, data}">
-            <div
-              v-if="handleSelected(data.day) === 'all'"
-              class="optional-date"
-              @click="selectedDay(data.day)"
-            >
-              {{ data.day.split('-').slice(2).join('-') }}
-            </div>
-            <div
-              v-else
-              :class="handleSelected(data.day) == data.day ? 'optional-date' : ''"
-            >
-              <div
-                class="sele"
-                v-if="handleSelected(data.day) == data.day"
-                @click="selectedDay(data.day)"
-              >
-                {{ data.day.split('-').slice(2).join('-') }}
-                <p>出诊</p>
-              </div>
-              <div v-else>{{ data.day.split('-').slice(2).join('-') }}</div>
-            </div>
-          </template>
-        </el-calendar>
-      </el-dialog> -->
+    <el-dialog title="选择预约日期" :visible.sync="dialogVisible">
+      <el-calendar>
+        <template slot="dateCell" slot-scope="{date, data}">
+          <div v-if="handleSelected(data.day) === 'all'" class="optional-date"
+            :class="data.day == uday ? 'selected-day' : ''" @click="selectedDay(data.day)">
+            {{ data.day.split('-').slice(2).join('-') }}
+            <p>{{ data.day == uday ? '已选' : ''}}</p>
+          </div>
+          <div v-else>
+            {{ data.day.split('-').slice(2).join('-') }}
+          </div>
+        </template>
+      </el-calendar>
+    </el-dialog>
+    <div class="bottom">
+      <a class="tx" href="/gh/list_xcx.html">
+        <img src="./images/tx2.png" alt=""> 特需专家号</a>
+      <a class="pt active" href="/gh/list.html">
+        <img src="./images/pt.png" alt=""> 普通门诊号</a>
+    </div>
   </div>
-  <!-- 专家列表 -->
-  <script src="js/zjList.js"></script>
   <script>
     var app = new Vue({
       el: '#app',
       data: {
         defaultImg: 'this.src="img/default.jpg"', //默认图
-        zj: 'default',
-        //zjBan: 'img/' + this.zj + '.jpg',
-        zjList: zjList, //医生列表
-        uname: '', //姓名
-        uphone: '', //电话
+        name: '', //姓名
+        tel: '', //电话
         uday: '', //预约日期
-        currentIndex: 0, //选中的日期
-        today: new Date().getDate(),
-        //dialogVisible: false, //选择日期窗
+        keshi: '', //预约科室
+        dialogVisible: false, //选择日期窗
       },
       mounted() {
         var url = window.location.href
@@ -120,77 +101,52 @@
             //遍历数组，拿到json对象
             cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
           }
-          this.zj = cs.zj
+          this.uday = new Date().getFullYear() + '-' + cs.date
+          this.keshi = decodeURI(cs.keshi)
         }
-        //默认选中第一个日期
-        var day = zjList[this.zj][2].split(';')
-        this.uday = day[0]
-      },
-      computed: {
-        zzTime() {
-          var time = zjList[this.zj]
-          if (time) {
-            return time[2].split(';')
-          }
-        },
       },
       methods: {
-        currentDate(date) {
-          var dateArr = date.split('-')
-          if (this.today <= dateArr[2]) {
-            return true
+        //点击选择日期框后
+        handleSelected(day) {
+          let today = new Date()
+          let thisDay = new Date(day)
+          if (today < thisDay) {
+            return 'all'
+          } else {
+            return false
           }
         },
-        weekDay(day) {
-          var weekDay = [
-            '周日',
-            '周一',
-            '周二',
-            '周三',
-            '周四',
-            '周五',
-            '周六',
-          ]
-          var myDate = new Date(Date.parse(day.replace(/-/g, '/')))
-          return weekDay[myDate.getDay()]
-        },
-        toDay(day) {
-          if (day) {
-            var dateArr = day.split('-')
-            return dateArr[1] + '月' + dateArr[2] + '日'
-          }
-        },
-        changeIndex(index, date) {
-          this.currentIndex = index
-          this.uday = date
-        },
-        //点击选择日期后
-        // handleSelected(day) {
-        //   var time = this.zjList[this.zj]
-        //   if (time && time[1]) {
-        //     var timeList = time[1].split(';')
-        //     for (let i = 0; i < timeList.length; i++) {
-        //       if (timeList[i] == day) {
-        //         return timeList[i]
-        //       }
-        //     }
-        //   } else {
-        //     return 'all'
-        //   }
-        // },
         //选择日期
-        // selectedDay(day) {
-        //   this.uday = day
-        //   this.dialogVisible = false
-        // },
+        selectedDay(day) {
+          this.uday = day
+          this.dialogVisible = false
+        },
       },
     })
-      // window.onbeforeunload = function (e) {
-      //   var e = window.event || e
-      //   e.returnValue = '确定离开页面吗？'
-      // }
+
+    function submitForm() {
+      if ($('#name').val() == '') {
+        $('#name').focus()
+        alert('*请输入您的姓名！')
+        return false
+      }
+
+      if ($('#tel').val() != '') {
+        if (/^1[3456789]\d{9}$/.test($('#tel').val()) == false) {
+          alert('*请输入您的正确联系方式！')
+          return false
+        }
+      } else {
+        $('#tel').focus()
+        alert('*请输入联系方式！')
+        return false
+      }
+      if ($('#time').val() == '') {
+        alert('*请选择预约时间！')
+        return false
+      }
+    }
   </script>
-  <script src="js/yyform.js"></script>
 </body>
 
 </html>

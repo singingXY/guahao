@@ -21,8 +21,8 @@
       height: 3.5rem;
     }
 
-    .table .td span {
-      font-weight: normal;
+    .table .td a {
+      color: #20b59a;
     }
   </style>
 </head>
@@ -43,44 +43,48 @@
       <div id="content"></div>
     </div>
   </div>
+  <div class="bottom">
+    <a class="tx" href="/gh/list_xcx.html">
+      <img src="./images/tx2.png" alt=""> 特需专家号</a>
+    <a class="pt active" href="/gh/list.html">
+      <img src="./images/pt.png" alt=""> 普通门诊号</a>
+  </div>
   <script src="js/indexList.js"></script>
   <script>
     var th = ''
     for (let i = 0; i < 7; i++) {
-      th += '<div class="td">' + weekText[i] + '<p>' + aWeek[i] + '</p></div>'
+      var aWeekArr = aWeek[i].split('-')
+      th += '<div class="td">' + weekText[i] + '<p>' + aWeekArr[0] + '月' + aWeekArr[1] + '日</p></div>'
+
     }
     document.getElementById('tableHead').innerHTML = th
 
-
     var outpatient = [
-      '康复医学科',
-      '肿瘤科',
-      '神经内科',
-      '呼吸内科',
-      '消化内科',
-      '心血管内科',
-      '泌尿外科',
-      '结石科',
-      '中医肛肠科',
-      '妇科',
-      '计划生育门诊',
-      '不孕门诊',
+      '康复医学科', '老年科', '神经内科', '心血管内科', '呼吸内科', '消化内科', '中医肛肠科', '肿瘤科', '中医科', '中西医结合科', '皮肤科', '腋臭门诊', '泌尿外科', '男性功能障碍', '普外科', '疝气门诊', '减重门诊', '结石门诊', '妇科', '计划生育门诊', '围绝经期门诊', '不孕门诊', '乳腺科', '内分泌科', '耳鼻咽喉科', '眼科', '骨科', '口腔科', '肝胆内科', '体检科'
     ]
-
     for (let i = 0; i < outpatient.length; i++) {
       document.getElementById('tableLeft').innerHTML +=
         '<div class="tr">' + outpatient[i] + '</div>'
+
+      document.getElementById('content').innerHTML += '<div id="ks_' + i + '" class="tr"></div>'
+      document.getElementById('ks_' + i).innerHTML = td(outpatient[i])
     }
-    for (let i = 0; i < List.length; i++) {
-      document.getElementById('content').innerHTML +=
-        '<div id="ks_' + i + '" class="tr"></div>'
-    }
-    function notEmpty(e) {
-      if (e) {
-        return e
-      } else {
-        return ' '
+
+    function td(ks) {
+      var tds = ''
+      for (let j = 0; j < 7; j++) {
+        tds = tds + '<div class="td"><a href="/?keshi=' + ks + '&date=' + weekArr(aWeek[j]) + '">有号</a></div>'
       }
+      return tds;
+    }
+    function weekArr(obj) {
+      var num = obj.split('-')
+      return appendZero(num[0]) + '-' + appendZero(num[1])
+    }
+    function appendZero(num) {
+      if (num < 10) {
+        return "0" + "" + num;
+      } else { return num; }
     }
   </script>
 </body>
