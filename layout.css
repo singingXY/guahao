@@ -335,7 +335,6 @@ header img {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  color: #f00;
   line-height: 1;
   box-sizing: border-box;
 }
@@ -347,30 +346,25 @@ header img {
   white-space: nowrap;
   color: #333;
 }
-.table .td a {
-  color: #f00;
-}
 
 .bottom {
+  display: flex;
   box-sizing: border-box;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 0 0.6rem;
   text-align: center;
 }
 .bottom a {
-  display: inline-block;
-  width: 46.8%;
-  margin: 0 0.2rem;
-  padding: 0.75rem 0 0.85rem;
+  display: block;
+  width: 50%;
+  padding: 1.1rem 0 1.2rem;
   line-height: 1.6rem;
   color: #333;
-  border: solid 1px #b9b9b9;
+  border-top: solid 1px #b9b9b9;
   border-bottom: 0;
-  border-radius: 0.3rem 0.3rem 0 0;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   background: #fff;
 }
 .bottom a.active {
