@@ -131,13 +131,17 @@ header img {
 .submit-form,
 .submit-back {
   padding: 1.15rem 0;
-  width: 46%;
+  width: 100%;
   background-color: #f68400;
   border-color: #f68400;
   color: #fff;
   font-size: 1.5rem;
   text-align: center;
   border-radius: 0.3rem;
+}
+.submit-form-width,
+.submit-back {
+  width: 46%;
 }
 .submit-back {
   background-color: #279990;
