@@ -54,11 +54,37 @@
   </div>
   <script src="js/indexList.js"></script>
   <script>
+    //获取今天开始的一周
+    function getOneWeekData() {
+      var now = new Date();
+      var nowTime = now.getTime();
+      var oneDayTime = 24 * 60 * 60 * 1000;
+      var aaWeek = [];
+      for (var i = 0; i < 7; i++) {
+        //显示周一
+        var ShowTime = nowTime + i * oneDayTime;
+        //初始化日期时间
+        var myDate = new Date(ShowTime);
+        //var year = myDate.getFullYear();//年
+        //var month = (myDate.getMonth() + 1).toString().padStart(2, '0');//月
+        //var date = (myDate.getDate()).toString().padStart(2, '0');//日
+        var month = myDate.getMonth() + 1
+        var date = myDate.getDate()
+        var monthDate = month + "-" + date;
+        var weekday = "星期" + "日一二三四五六".charAt(myDate.getDay());
+        var oneItem = {
+          weekday: weekday,
+          monthDate: monthDate
+        };
+        aaWeek.push(oneItem);
+      }
+      return aaWeek;
+    }
+
     var th = ''
     for (let i = 0; i < 7; i++) {
-      var aWeekArr = aWeek[i].split('-')
-      th += '<div class="td">' + weekText[i] + '<p>' + aWeekArr[0] + '月' + aWeekArr[1] + '日</p></div>'
-
+      var aWeekArr = getOneWeekData()[i].monthDate.split('-')
+      th += '<div class="td">' + getOneWeekData()[i].weekday + '<p>' + aWeekArr[0] + '月' + aWeekArr[1] + '日</p></div>'
     }
     document.getElementById('tableHead').innerHTML = th
 
@@ -76,7 +102,7 @@
     function td(ks) {
       var tds = ''
       for (let j = 0; j < 7; j++) {
-        tds = tds + '<div class="td"><a href="/gh/?keshi=' + ks + '&date=' + weekArr(aWeek[j]) + '">有号</a></div>'
+        tds = tds + '<div class="td"><a href="/gh/?keshi=' + ks + '&date=' + weekArr(getOneWeekData()[j].monthDate) + '">有号</a></div>'
       }
       return tds;
     }
