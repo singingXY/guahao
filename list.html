@@ -102,7 +102,18 @@
     function td(ks) {
       var tds = ''
       for (let j = 0; j < 7; j++) {
-        tds = tds + '<div class="td"><a href="/gh/?keshi=' + ks + '&date=' + weekArr(getOneWeekData()[j].monthDate) + '">有号</a></div>'
+        let weekday = getOneWeekData()[j].weekday
+        if (
+          (ks == '中西医结合科' && weekday == '星期一') ||
+          (ks == '中医科' && weekday == '星期一') ||
+          (ks == '皮肤科' && weekday == '星期三') ||
+          (ks == '眼科' && weekday !== '星期三') ||
+          (ks == '体检科' && weekday == '星期日')
+        ) {
+          tds = tds + '<div class="td">无号</div>'
+        } else {
+          tds = tds + '<div class="td"><a href="/gh/?keshi=' + ks + '&date=' + weekArr(getOneWeekData()[j].monthDate) + '">有号</a></div>'
+        }
       }
       return tds;
     }
