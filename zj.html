@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="telephone=no" name="format-detection" />
+
+  <title>苏州同济医院_同济官网在线预约</title>
+  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/vue@2.6.11.js"></script>
+  <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet" />
+  <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
+  <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <header>
+        <el-image
+          :src="'https://xcx.sztjyy.cn/gh/img/' + this.zj + '.jpg'"
+          :onerror="defaultImg"
+        ></el-image>
+    </header>
+    <h5 class="title">苏州同济医院预约挂号中心</h5>
+    <el-form class="bd" label-position="right" id="gh_form" action="https://xcx.sztjyy.cn/plus/diy.php"
+      enctype="multipart/form-data" method="post">
+      <input type="hidden" name="action" value="post" />
+      <input type="hidden" name="diyid" value="2" />
+      <input type="hidden" name="do" value="2" />
+      <el-form-item label="">
+        <el-input id="name" v-model="name" placeholder="请输入您的姓名"></el-input>
+      </el-form-item>
+      <el-form-item label="">
+        <el-input name="tel" id="tel" type="number" v-model="tel" minlength="7" placeholder="请输入您的电话号码"></el-input>
+      </el-form-item>
+      <el-form-item label="">
+        <el-input name="keshi" id="keshi" v-model="keshi" readonly></el-input>
+      </el-form-item>
+      <el-form-item label="">
+        <el-input name="time" id="time" readonly placeholder="请选择预约日期" suffix-icon="el-icon-date" v-model="uday"
+          @focus="dialogVisible = true">
+        </el-input>
+      </el-form-item>
+      <input type="hidden" name="url" id="url" v-model="document.location.href" />
+      <input type="hidden" name="now" id="now" v-model="new Date().toLocaleString()" />
+      <input type="hidden" name="dede_fields"
+        value="name,text;tel,text;time,text;doctor,text;keshi,text;url,text;now,text" />
+      <input type="hidden" name="dede_fieldshash" value="5d0d44041148b50becd280fd3b783d80" />
+      <p class="bd-p"><img src="https://xcx.sztjyy.cn/gh/images/lock.png" alt="" /> 隐私保护</p>
+      <el-row type="flex" justify="space-between">
+        <a class="submit-back" href="/gh/list.html">返回上页</a>
+        <input type="submit" value="提交挂号" class="submit-form submit-form-width" onclick="return submitForm()" />
+      </el-row>
+    </el-form>
+    <p class="tips">
+      <strong>*温馨提示</strong><br />
+      通过网络就诊的患者请留下正确的联系方式，客服人员会及时与您联系！
+    </p>
+    <img class="allied" src="https://xcx.sztjyy.cn/gh/images/dw.png" alt="" />
+    <el-dialog title="选择预约日期" :visible.sync="dialogVisible">
+      <el-calendar>
+        <template slot="dateCell" slot-scope="{date, data}">
+          <div v-if="handleSelected(data.day) === 'all'" class="optional-date"
+            :class="data.day == uday ? 'selected-day' : ''" @click="selectedDay(data.day)">
+            {{ data.day.split('-').slice(2).join('-') }}
+            <p>{{ data.day == uday ? '已选' : ''}}</p>
+          </div>
+          <div v-else>
+            {{ data.day.split('-').slice(2).join('-') }}
+          </div>
+        </template>
+      </el-calendar>
+    </el-dialog>
+
+    <div class="bottom">
+      <a class="tx" href="/gh/list_xcx.html">
+        <img src="https://xcx.sztjyy.cn/gh/images/tx2.png" alt=""> 特需专家号</a>
+      <a class="pt active" href="/gh/list.html">
+        <img src="https://xcx.sztjyy.cn/gh/images/pt.png" alt=""> 普通门诊号</a>
+    </div>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        defaultImg: 'this.src="https://xcx.sztjyy.cn/gh/images/ptmz_02.jpg"', //默认图
+        zj: '',
+        name: '', //姓名
+        tel: '', //电话
+        uday: '', //预约日期
+        keshi: '妇科', //预约科室
+        dialogVisible: false, //选择日期窗
+      },
+      mounted() {
+        var url = window.location.href
+        var dz_url = url.split('#')[0] //获取#之前的字符串
+        var cs = dz_url.split('?')[1] //获取?之后的参数字符串
+        if (cs) {
+          var cs_arr = cs.split('&') //参数字符串分割为数组
+          var cs = {}
+          for (var i = 0; i < cs_arr.length; i++) {
+            //遍历数组，拿到json对象
+            cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+          }
+          if (cs.date) {
+            this.uday = new Date().getFullYear() + '-' + cs.date
+          }
+          this.keshi = decodeURI(cs.keshi)
+		  this.zj = cs.zj
+		  console.log(cs)
+        }
+      },
+      methods: {
+        //点击选择日期框后
+        handleSelected(day) {
+          let today = new Date()
+          let thisDay = new Date(day)
+          if (today < thisDay) {
+            return 'all'
+          } else {
+            return false
+          }
+        },
+        //选择日期
+        selectedDay(day) {
+          this.uday = day
+          this.dialogVisible = false
+        },
+      },
+    })
+
+    function submitForm() {
+      if ($('#name').val() == '') {
+        $('#name').focus()
+        alert('*请输入您的姓名！')
+        return false
+      }
+
+      if ($('#tel').val() != '') {
+        if (/^1[3456789]\d{9}$/.test($('#tel').val()) == false) {
+          alert('*请输入您的正确联系方式！')
+          return false
+        }
+      } else {
+        $('#tel').focus()
+        alert('*请输入联系方式！')
+        return false
+      }
+      if ($('#time').val() == '') {
+        alert('*请选择预约时间！')
+        return false
+      }
+    }
+  </script>
+</body>
+
+</html>
