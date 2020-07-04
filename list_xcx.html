@@ -13,28 +13,85 @@
   <script src="js/jquery.min.js"></script>
   <script src="js/rem.js"></script>
   <style>
-    .table .tr {
-      height: 2.6rem;
+    table {
+      table-layout: fixed;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #262d2d;
+      font-weight: 700;
+      font-size: 1rem;
     }
 
-    .table .table-head {
-      height: 3.5rem;
+    caption {
+      padding: 1.5rem 0;
+      background: #00927f;
+      font-size: 1.5rem;
+      color: #fff;
     }
 
-    .table-left .tr {
+    tr {
+      border-bottom: 1px solid #262d2d;
+    }
+
+    tr.odd td {
+      border-top: 1px solid #d5e5e8;
+    }
+
+    th {
+      background: #3fbabf;
+      color: #fff;
+    }
+
+    th:first-child {
+      background: #fff;
+      color: #222;
+      width: 4.7rem;
+      border-right: 0;
+    }
+
+    th:nth-child(2) {
+      background: #fff;
+      color: #222;
+      width: 2rem;
+    }
+
+    th .tks {
+      margin-left: 2rem;
+    }
+
+    th,
+    td {
+      padding: .2rem 0;
+      height: 1.8rem;
+      line-height: 1.2;
+      border-right: 1px solid #d5e5e8;
+      word-break: keep-all;
+    }
+
+    td:last-child {
+      border-right: 0;
+    }
+
+    td a {
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    td span {
       font-weight: normal;
+      display: inline-block;
+      font-size: 1rem;
+      transform: scale(0.5);
+      line-height: 1.2rem;
+      width: 200%;
+      margin-top: -0.4rem;
     }
 
-    .table .tr .td {
-      font-weight: bold;
-    }
-
-    .table .td a {
-      color: #000;
-    }
-
-    .table .td span {
-      font-weight: normal;
+    table tr:last-child {
+      border-bottom: 0;
     }
   </style>
 </head>
@@ -46,16 +103,22 @@
     <img class="qr" src="./images/qr.png" alt="" />
   </header>
 
-  <h5 class="title">同济医院特需门诊专家出诊信息</h5>
-  <div class="table">
-    <div class="table-left" id="tableLeft">
-      <div class="tr"></div>
-    </div>
-    <div class="table-right">
-      <div class="tr table-head" id="tableHead"></div>
-      <div id="content"></div>
-    </div>
-  </div>
+  <table id="myTable">
+    <caption>同济医院特需门诊专家7月出诊信息</caption>
+    <tr class="odd">
+      <th>
+        <div class="tks">科室</div>
+      </th>
+      <th></th>
+      <th>星期一</th>
+      <th>星期二</th>
+      <th>星期三</th>
+      <th>星期四</th>
+      <th>星期五</th>
+      <th>星期六</th>
+      <th>星期日</th>
+    </tr>
+  </table>
   <img class="allied" src="./images/dw.png" alt="" />
   <div class="bottom">
     <a class="tx active" href="/gh/list_xcx.html">
@@ -63,52 +126,71 @@
     <a class="pt" href="/gh/list.html">
       <img src="./images/pt2.png" alt=""> 普通门诊号</a>
   </div>
-  <script src="js/indexList.js?date=20200617"></script>
+  <script src="js/zjList.js?date=20200703"></script>
   <script>
-
-    var th = ''
-    for (let i = 0; i < 7; i++) {
-      var aWeekArr = aWeek[i].split('-')
-      th += '<div class="td">' + weekText[i] + '<p>' + aWeekArr[0] + '月' + aWeekArr[1] + '日</p></div>'
+    function week() {
+      let c = ''
+      for (let d = 1; d <= 7; d++) {
+        c += '<td class="week_' + d + '"></td>'
+      }
+      return c
     }
-    document.getElementById('tableHead').innerHTML = th
-
     for (let i = 0; i < department.length; i++) {
-      document.getElementById('tableLeft').innerHTML +=
-        '<div class="tr">' + department[i] + '</div>'
-    }
-    for (let i = 0; i < List.length; i++) {
-      document.getElementById('content').innerHTML +=
-        '<div id="ks_' + i + '" class="tr"></div>'
-      for (let j = 0; j < List[i].length; j++) {
-        if (List[i][j][3]) {
-          document.getElementById('ks_' + i).innerHTML +=
-            '<div class="td"><a href="/gh/index_tx.html?zj=' +
-            List[i][j][0] +
-            '">' +
-            notEmpty(List[i][j][1]) +
-            '</a><br><a href="/gh/index_tx.html?zj=' +
-            List[i][j][3] +
-            '">' +
-            notEmpty(List[i][j][4]) +
-            '</a></div>'
-        } else {
-          document.getElementById('ks_' + i).innerHTML +=
-            '<div class="td"><a href="/gh/index_tx.html?zj=' +
-            List[i][j][0] +
-            '">' +
-            notEmpty(List[i][j][1]) +
-            '<br><span>' +
-            notEmpty(List[i][j][2]) +
-            '</span></a></div>'
+      var tableC =
+        '<tr id="am_' + i + '"><td rowspan="2">' + department[i]
+        + '</td><td>上<br>午</td>' + week() + '</tr>'
+        + '<tr class="odd" id="pm_' + i + '"><td>下<br>午</td>' + week() + '</tr>'
+      $('#myTable').append(tableC)
+
+      for (const zjLists in zjList) {
+        var zjs = zjList[zjLists]
+        //如果存在排班且科室相符
+        if (zjs[4] && department[i] == zjs[1]) {
+          let textHtml = '<a href="/gh/index_tx.html?zj=' + zjLists + '">' +
+            zjs[0] + '<br><span>' + zjs[5] + '</span></a>'
+          let hDay = zjs[3]
+          if (hDay.indexOf('上午') != -1 || hDay.indexOf('下午') != -1) {
+            let zjWeek = parseInt(zjs[4])
+            let zDays = zjs[4].split(';')
+            let NumA = $('#am_' + i).children('td')
+            let NumB = $('#pm_' + i).children('td')
+            if (zDays.length > 1) {
+              for (let d = 0; d < zDays.length; d++) {
+                zjWeek = parseInt(zDays[d])
+                if (hDay.split('/').length > 1) {
+                  if (d == 0) {
+                    isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
+                  } else if (d == 1) {
+                    isAPm(hDay, NumB[zjWeek], '下午', textHtml)
+                  }
+                } else {
+                  isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
+                  isAPm(hDay, NumB[zjWeek], '下午', textHtml)
+                }
+              }
+            } else {
+              isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
+              isAPm(hDay, NumB[zjWeek], '下午', textHtml)
+            }
+          }
+        } else if (department[i] == zjs[1]) {
+          //科室相符未排班，隐藏
+          $('#am_' + i).hide()
+          $('#pm_' + i).hide()
         }
       }
     }
-    function notEmpty(e) {
-      if (e) {
-        return e
+    function isAppend(Num, textHtml) {
+      //一个半日内有两位坐诊专家则追加
+      if (!Num.innerHTML) {
+        Num.innerHTML = textHtml
       } else {
-        return ' '
+        $(textHtml).appendTo(Num)
+      }
+    }
+    function isAPm(hDay, Num, text, textHtml) {
+      if (hDay.indexOf(text) != -1) {
+        isAppend(Num, textHtml)
       }
     }
   </script>
