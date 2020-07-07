@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="telephone=no" name="format-detection" />
+
+  <title>苏州同济医院_同济官网在线预约</title>
+  <link href="layout.css" rel="stylesheet" type="text/css" />
+  <script src="js/jquery.min.js"></script>
+  <script src="js/rem.js"></script>
+  <style>
+    table {
+      table-layout: fixed;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #262d2d;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    tr {
+      border-bottom: 1px solid #262d2d;
+    }
+
+    tr.odd td {
+      border-top: 1px solid #d5e5e8;
+    }
+
+    th {
+      background: #3fbabf;
+      color: #fff;
+    }
+
+    th:first-child {
+      background: #fff;
+      color: #222;
+      width: 4.7rem;
+      border-right: 0;
+    }
+
+    th:nth-child(2) {
+      background: #fff;
+      color: #222;
+      width: 2rem;
+    }
+
+    th .tks {
+      margin-left: 2rem;
+    }
+
+    th,
+    td {
+      padding: .2rem 0;
+      height: 1.8rem;
+      line-height: 1.2;
+      border-right: 1px solid #d5e5e8;
+      word-break: keep-all;
+    }
+
+    td:last-child {
+      border-right: 0;
+    }
+
+    td a {
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    td span {
+      font-weight: normal;
+      display: inline-block;
+      font-size: 1rem;
+      transform: scale(0.5);
+      line-height: 1.2rem;
+      width: 200%;
+      margin-top: -0.4rem;
+    }
+
+    table tr:last-child {
+      border-bottom: 0;
+    }
+
+    .allied {
+      margin: 0;
+      width: 100%;
+      padding-bottom: 0;
+    }
+
+    body {
+      padding-bottom: 0;
+    }
+  </style>
+</head>
+
+<body class="index">
+  <header>
+    <img src="./images/logo_xcx.jpg" alt="" />
+    <img id="header" src="./images/ptmz_02.jpg" alt="" />
+  </header>
+
+  <table id="myTable">
+    <tr class="odd">
+      <th>
+        <div class="tks">专家</div>
+      </th>
+      <th></th>
+      <th>星期一</th>
+      <th>星期二</th>
+      <th>星期三</th>
+      <th>星期四</th>
+      <th>星期五</th>
+      <th>星期六</th>
+      <th>星期日</th>
+    </tr>
+  </table>
+  <img class="allied" src="./images/bottom.png" alt="" />
+  <script src="js/zjList.js?date=20200703"></script>
+  <script>
+    var url = window.location.href
+    var dz_url = url.split('#')[0] //获取#之前的字符串
+    var cs = dz_url.split('?')[1] //获取?之后的参数字符串
+    if (cs) {
+      var cs_arr = cs.split('&') //参数字符串分割为数组
+      var cs = {}
+      for (var i = 0; i < cs_arr.length; i++) {
+        cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+      }
+    }
+    $('#header').attr("src", './images/ks/' + cs.ks + '.jpg')
+    var keShi;
+    switch (cs.ks) {
+      case 'xh': keShi = "消化内科"; break;
+      case 'sn': keShi = "神经内科"; break;
+      case 'hx': keShi = "呼吸科 /肺科"; break;
+      case 'zl': keShi = "肿瘤科"; break;
+      case 'nfm': keShi = "肾病/ 内分泌科"; break;
+      case 'xnk': keShi = "心内科"; break;
+      case 'pw': keShi = "普外科"; break;
+      case 'gc': keShi = "肛肠科"; break;
+      case 'rx': keShi = "乳腺科"; break;
+      case 'fk': keShi = "妇产科"; break;
+      case 'grk': keShi = "感染病科"; break;
+      case 'zxy': keShi = "中西医 结合科"; break;
+      case 'kfk': keShi = "康复科"; break;
+      case 'jzk': keShi = "急诊科"; break;
+      case 'yk': keShi = "眼科"; break;
+    }
+
+    function week() {
+      let c = ''
+      for (let d = 1; d <= 7; d++) {
+        c += '<td class="week_' + d + '"></td>'
+      }
+      return c
+    }
+    var arr = []
+    for (const zjLists in zjList) {
+      var zjs = zjList[zjLists]
+      if (zjs[1] == keShi) {
+        arr.push(zjs)
+        let i = arr.length //人数
+        var tableC =
+          '<tr id="am_' + i + '"><td rowspan="2">' + zjs[0]
+          + '</td><td>上<br>午</td>' + week() + '</tr>'
+          + '<tr class="odd" id="pm_' + i + '"><td>下<br>午</td>' + week() + '</tr>'
+        $('#myTable').append(tableC)
+
+        let NumA = $('#am_' + i).children('td')
+        let NumB = $('#pm_' + i).children('td')
+        let textHtml = '<a href="/gh/index_tx.html?zj=' + zjLists + '">预约</a>'
+        let zDays = zjs[4].split(';')
+        for (let d = 1; d <= 7; d++) {
+          if (zDays.length > 1 && parseInt(zDays) == d) {
+            for (let l = 0; l < zDays.length; l++) {
+              zjWeek = parseInt(zDays[l])
+              if (zjs[3].split('/').length > 1) {
+                if (l == 0) {
+                  isAPm(zjs[3], NumA[zjWeek + 1], '上午', textHtml)
+                } else if (l == 1) {
+                  isAPm(zjs[3], NumB[zjWeek], '下午', textHtml)
+                }
+              } else {
+                isAPm(zjs[3], NumA[zjWeek + 1], '上午', textHtml)
+                isAPm(zjs[3], NumB[zjWeek], '下午', textHtml)
+              }
+            }
+          } else {
+            if (zjs[4] == d) {
+              isAPm(zjs[3], NumA[d + 1], '上午', textHtml)
+              isAPm(zjs[3], NumB[d], '下午', textHtml)
+            }
+          }
+        }
+      }
+    }
+    function isAPm(hDay, Num, text, textHtml) {
+      if (hDay.indexOf(text) != -1) {
+        $(textHtml).appendTo(Num)
+      }
+    }
+  </script>
+</body>
+
+</html>
