@@ -126,7 +126,7 @@
     <a class="pt" href="/gh/list.html">
       <img src="./images/pt2.png" alt=""> 普通门诊号</a>
   </div>
-  <script src="js/zjList.js?date=20200703"></script>
+  <script src="js/zjList.js?date=20200708"></script>
   <script>
     function week() {
       let c = ''
@@ -137,8 +137,9 @@
     }
     for (let i = 0; i < department.length; i++) {
       var tableC =
-        '<tr id="am_' + i + '"><td rowspan="2">' + department[i]
-        + '</td><td>上<br>午</td>' + week() + '</tr>'
+        '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/ks_tx.html?ks='
+        + dpm[i] + '">' + department[i]
+        + '</a></td><td>上<br>午</td>' + week() + '</tr>'
         + '<tr class="odd" id="pm_' + i + '"><td>下<br>午</td>' + week() + '</tr>'
       $('#myTable').append(tableC)
 
