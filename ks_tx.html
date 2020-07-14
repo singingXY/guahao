@@ -66,9 +66,12 @@
     }
 
     td a {
+      color: #333;
+    }
+
+    td a.tda {
       display: inline-block;
       width: 90%;
-      /* height: 90%; */
       padding: 10% 0;
       font-weight: normal;
       background: #00927d;
@@ -82,7 +85,7 @@
       margin-top: -0.4rem;
       transform: scale(0.5) translateX(-50%);
       font-weight: normal;
-      font-size: 1rem;
+      font-size: 1.3rem;
       line-height: 1.2rem;
     }
 
@@ -124,7 +127,7 @@
     </tr>
   </table>
   <img class="allied" src="./images/bottom.png" alt="" />
-  <script src="js/zjList.js?date=20200703"></script>
+  <script src="js/zjList.js?date=20200714"></script>
   <script>
     var url = window.location.href
     var dz_url = url.split('#')[0] //获取#之前的字符串
@@ -170,15 +173,16 @@
         arr.push(zjs)
         let i = arr.length //人数
         var tableC =
-          '<tr id="am_' + i + '"><td rowspan="2">' + zjs[0]
+          '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/index_tx.html?zj='
+          + zjLists + '">' + zjs[0]
           + '<br><span>' + zjs[5] + '</span>'
-          + '</td><td>上<br>午</td>' + week() + '</tr>'
+          + '</a></td><td>上<br>午</td>' + week() + '</tr>'
           + '<tr class="odd" id="pm_' + i + '"><td>下<br>午</td>' + week() + '</tr>'
         $('#myTable').append(tableC)
 
         let NumA = $('#am_' + i).children('td')
         let NumB = $('#pm_' + i).children('td')
-        let textHtml = '<a href="/gh/index_tx.html?zj=' + zjLists + '">预约</a>'
+        let textHtml = '<a class="tda" href="/gh/index_tx.html?zj=' + zjLists + '">预约</a>'
         let zDays = zjs[4].split(';')
         for (let d = 1; d <= 7; d++) {
           if (zDays.length > 1 && parseInt(zDays) == d) {
