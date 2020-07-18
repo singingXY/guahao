@@ -9,23 +9,33 @@
   <meta content="telephone=no" name="format-detection" />
 
   <title>苏州同济医院_同济官网在线预约</title>
-  <script src="js/jquery.min.js"></script>
-  <script src="js/vue@2.6.11.js"></script>
-  <link rel="stylesheet" href="js/element-ui.css" />
-  <link href="layout.css" rel="stylesheet" type="text/css" />
-  <script src="js/element-ui.js"></script>
-  <script src="js/rem.js"></script>
+  <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
+  <script src="/gh/js/vue@2.6.11.js"></script>
+  <link rel="stylesheet" href="https://xcx.sztjyy.cn/gh/js/element-ui.css" />
+  <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script> 
 </head>
 
 <body>
+  <style>
+    .detailed {
+      display: none;
+    }
+  </style>
   <div id="app">
     <div class="zjban">
-      <el-image :src="'img/' + this.zj + '.jpg'" :preview-src-list="this.zj ? ['img/'+ this.zj+'-b.jpg'] : ''"
-        :onerror="defaultImg"></el-image>
+      <el-image :src="'https://xcx.sztjyy.cn/gh/zjimg/' + this.zj + '.jpg'" :onerror="defaultImg"></el-image>
     </div>
-    <h5 class="title">苏州同济医院预约挂号中心</h5>
-    <el-form class="bd" label-position="right" id="gh_form" action="/plus/diy.php" enctype="multipart/form-data"
-      method="post">
+    <div class="detailed">
+      <h5><img src="https://xcx.sztjyy.cn/gh/images/d1.png" alt="">专业擅长</h5>
+      <p>{{content.skilled}}</p>
+      <h5><img src="https://xcx.sztjyy.cn/gh/images/d2.png" alt="">学术领域</h5>
+      <p><span class="more" :class=" ellipsis ? '' : 'ellipsis' " v-if="cLength >= maxLength" @click="doEllipsis()"><img
+            class="ro" src="https://xcx.sztjyy.cn/gh/images/arr.png" alt=">"></span>
+        {{contentShow}}
+      </p>
+    </div>
+    <el-form class="bd" label-position="right" id="gh_form" action="https://xcx.sztjyy.cn/plus/diy.php"
+      enctype="multipart/form-data" method="post">
       <input type="hidden" name="action" value="post" />
       <input type="hidden" name="diyid" value="1" />
       <input type="hidden" name="do" value="2" />
@@ -42,14 +52,13 @@
       <ul class="visit-date">
         <template v-for="(date,index) in zzTime">
           <li v-if="currentDate(date)" @click="changeIndex(index,date)" :class="{active:currentIndex===index}">
-            {{ weekDay(date) }}<br />
-            {{ toDay(date)}}<br />有号
+            {{ toDay(date)}}<br />
+            {{ weekDay(date) }} {{apm(weekDay(date))}}
           </li>
           <li v-else style="background-color: #dcdcdc;">
-            {{ weekDay(date)}}<br />
-            {{ toDay(date)}}<br />无号
+            {{ toDay(date)}}<br />
+            {{ weekDay(date) }} {{apm(weekDay(date))}}
           </li>
-
         </template>
       </ul>
       <el-form-item label="" style="display: none;">
@@ -70,43 +79,15 @@
       <input type="hidden" name="dede_fields"
         value="name,text;tel,text;time,text;doctor,text;url,text;keshi,text;now,text" />
       <input type="hidden" name="dede_fieldshash" value="2bf7f7aa2800368824331d5e3966fc13" />
-      <p class="bd-p"><img src="./images/lock.png" alt="" /> 隐私保护</p>
+      <p class="bd-p">
+        <span class="bd-p-1"><img src="./images/d3.png" alt="">出诊地点：苏州同济医院</span>
+        <span><img class="bd-p-2" src="./images/lock.png" alt="" />隐私保护</span>
+      </p>
       <el-row type="flex" justify="space-around">
         <input type="submit" value="提交挂号" class="submit-form" onclick="return submitForm()" />
       </el-row>
     </el-form>
-    <p class="tips">
-      <strong>*温馨提示</strong><br />
-      通过网络就诊的患者请留下正确的联系方式，客服人员会及时与您联系！
-    </p>
-    <img class="allied" src="./images/dw.png" alt="" />
-    <!-- <el-dialog title="选择预约日期" :visible.sync="dialogVisible">
-        <el-calendar>
-          <template slot="dateCell" slot-scope="{date, data}">
-            <div
-              v-if="handleSelected(data.day) === 'all'"
-              class="optional-date"
-              @click="selectedDay(data.day)"
-            >
-              {{ data.day.split('-').slice(2).join('-') }}
-            </div>
-            <div
-              v-else
-              :class="handleSelected(data.day) == data.day ? 'optional-date' : ''"
-            >
-              <div
-                class="sele"
-                v-if="handleSelected(data.day) == data.day"
-                @click="selectedDay(data.day)"
-              >
-                {{ data.day.split('-').slice(2).join('-') }}
-                <p>出诊</p>
-              </div>
-              <div v-else>{{ data.day.split('-').slice(2).join('-') }}</div>
-            </div>
-          </template>
-        </el-calendar>
-      </el-dialog> -->
+
   </div>
   <div class="bottom">
     <a class="tx active" href="/gh/list_xcx.html">
@@ -115,21 +96,28 @@
       <img src="./images/pt2.png" alt=""> 普通门诊号</a>
   </div>
   <!-- 专家列表 -->
-  <script src="js/zjList.js?time=20200617"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/zjList.js?time=20200718"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/zj.js?time=20200718"></script>
+
   <script>
     var app = new Vue({
       el: '#app',
       data: {
         defaultImg: 'this.src="img/default.jpg"', //默认图
         zj: 'default',
-        //zjBan: 'img/' + this.zj + '.jpg',
         zjList: zjList, //医生列表
         name: '', //姓名
         tel: '', //电话
         time: '', //预约日期
         url: document.location.href,
         currentIndex: 0, //选中的日期
-        //dialogVisible: false, //选择日期窗
+        content: {},
+        contentShow: '', // 真实显示的内容
+        cLength: 0, //学术内容长度
+        maxLength: 86, // 收起时最大显示文字长度
+        ellipsis: true, // 是否收缩
       },
       mounted() {
         var url = window.location.href
@@ -147,6 +135,17 @@
         //默认选中第一个日期
         // var day = zjList[this.zj][2].split(';')
         // this.time = day[0]
+        var maxLength = this.maxLength;
+        for (let i = 0; i < profile.length; i++) {
+          if (profile[i].pinyin == cs.zj) {
+            var contentShow = profile[i].profile;
+            contentShow = (contentShow.length > maxLength && this.ellipsis) ? contentShow.substring(0, maxLength - 3) : contentShow;
+            this.content = profile[i]
+            this.contentShow = contentShow
+            this.cLength = this.content.profile.length
+          }
+        }
+        $('.detailed ').show()
       },
       computed: {
         zzTime() {
@@ -154,7 +153,7 @@
           if (time) {
             return time[2].split(';')
           }
-        },
+        }
       },
       methods: {
         currentDate(date) {
@@ -187,6 +186,33 @@
           this.currentIndex = index
           this.time = date
         },
+        doEllipsis() {
+          var ellipsis = !this.ellipsis;
+          var contentShow = this.content.profile
+          var maxLength = this.maxLength;
+          // 如果内容长度少于10，则不截取;否则处于收起状态，截取7个文字并加上省略号
+          contentShow = (contentShow.length > maxLength && ellipsis) ? contentShow.substring(0, maxLength - 3) : contentShow;
+          this.contentShow = contentShow
+          this.ellipsis = ellipsis
+
+        },
+        apm(date) {
+          var ampm = zjList[this.zj][3].split('/')
+          if (ampm.length > 1) {
+            //王少峰专用
+            if (date == '周二') {
+              return ampm[0]
+            } else {
+              return ampm[1]
+            }
+          } else {
+            if (zjList[this.zj][3] == '上午下午') {
+              return '全天'
+            } else {
+              return zjList[this.zj][3]
+            }
+          }
+        }
       },
     })
     function submitForm() {
