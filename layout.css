@@ -177,6 +177,7 @@ header img {
 .visit-date {
   width: 100%;
   overflow-x: scroll;
+  overflow-y: hidden;
   white-space: nowrap;
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
@@ -282,7 +283,7 @@ header img {
   width: 20px;
 }
 
-/* ??? */
+/* 总页面 */
 .index header {
   position: relative;
 }
@@ -419,12 +420,7 @@ header img {
   padding-left: 10rem;
   width: 1.2rem;
   height: 1.75rem;
-  background-image: linear-gradient(
-    to right,
-    rgba(245, 249, 250, 0),
-    rgba(245, 249, 250, 0.8),
-    rgb(245, 249, 250)
-  );
+  background-image: linear-gradient( to right, rgba(245, 249, 250, 0), rgba(245, 249, 250,.8), rgb(245, 249, 250) );
 }
 .detailed .more .ro {
   vertical-align: baseline;
