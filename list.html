@@ -54,6 +54,23 @@
   </div>
 
   <script>
+		var tag = ''
+		var url = window.location.href
+        var dz_url = url.split('#')[0] //获取#之前的字符串
+        var cs = dz_url.split('?')[1] //获取?之后的参数字符串
+        if (cs) {
+          var cs_arr = cs.split('&') //参数字符串分割为数组
+          var cs = {}
+          for (var i = 0; i < cs_arr.length; i++) {
+            //遍历数组，拿到json对象
+            cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+          }
+		  if(cs.tag){
+			var tag = cs.tag
+			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
+			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
+		  }
+        }
     //获取今天开始的一周
     function getOneWeekData() {
       var now = new Date();
@@ -112,7 +129,7 @@
         ) {
           tds = tds + '<div class="td">无号</div>'
         } else {
-          tds = tds + '<div class="td"><a href="/gh/?keshi=' + ks + '&date=' + weekArr(getOneWeekData()[j].monthDate) + '">有号</a></div>'
+          tds = tds + '<div class="td"><a href="/gh/?tag='+tag+'&keshi=' + ks + '&date=' + weekArr(getOneWeekData()[j].monthDate) + '">有号</a></div>'
         }
       }
       return tds;

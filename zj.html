@@ -46,10 +46,11 @@
         </el-input>
       </el-form-item>
       <input type="hidden" name="url" id="url" v-model="document.location.href" />
+      <input type="hidden" name="tag" id="tag" v-model="tag" />
       <input type="hidden" name="now" id="now" v-model="new Date().toLocaleString()" />
       <input type="hidden" name="dede_fields"
-        value="name,text;tel,text;time,text;doctor,text;keshi,text;url,text;now,text" />
-      <input type="hidden" name="dede_fieldshash" value="5d0d44041148b50becd280fd3b783d80" />
+        value="name,text;tel,text;time,text;doctor,text;url,text;keshi,text;now,text;tag,text" />
+      <input type="hidden" name="dede_fieldshash" value="6883269033b7572c3507fbde22ab90b5" />
       <p class="bd-p"><img src="https://xcx.sztjyy.cn/gh/images/lock.png" alt="" /> 隐私保护</p>
       <el-row type="flex" justify="space-between">
         <a class="submit-back" href="/gh/list.html">返回上页</a>
@@ -94,6 +95,7 @@
         uday: '', //预约日期
         keshi: '妇科', //预约科室
         dialogVisible: false, //选择日期窗
+		tag:''    //小程序标签
       },
       mounted() {
         var url = window.location.href
@@ -111,6 +113,10 @@
           }
           this.keshi = decodeURI(cs.keshi)
 		  this.zj = cs.zj
+		  this.tag = cs.tag
+		  
+			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
+			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
 		  console.log(cs)
         }
       },

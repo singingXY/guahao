@@ -30,7 +30,7 @@
       <input type="hidden" name="diyid" value="1" />
       <input type="hidden" name="do" value="2" />
       <el-form-item label="">
-        <el-input id="name" v-model="name" placeholder="请输入您的姓名"></el-input>
+        <el-input name="name" id="name" v-model="name" placeholder="请输入您的姓名"></el-input>
       </el-form-item>
       <el-form-item label="">
         <el-input name="tel" id="tel" type="number" v-model="tel" minlength="7" placeholder="请输入您的电话号码"></el-input>
@@ -44,10 +44,11 @@
         </el-input>
       </el-form-item>
       <input type="hidden" name="url" id="url" v-model="document.location.href" />
+      <input type="hidden" name="tag" id="tag" v-model="tag" />
       <input type="hidden" name="now" id="now" v-model="new Date().toLocaleString()" />
       <input type="hidden" name="dede_fields"
-        value="name,text;tel,text;time,text;doctor,text;url,text;keshi,text;now,text" />
-      <input type="hidden" name="dede_fieldshash" value="2bf7f7aa2800368824331d5e3966fc13" />
+        value="name,text;tel,text;time,text;doctor,text;url,text;keshi,text;now,text;tag,text" />
+      <input type="hidden" name="dede_fieldshash" value="6883269033b7572c3507fbde22ab90b5" />
       <p class="bd-p"><img src="./images/lock.png" alt="" /> 隐私保护</p>
       <el-row type="flex" justify="space-between">
         <a class="submit-back" href="/gh/list.html">返回上页</a>
@@ -90,6 +91,7 @@
         uday: '', //预约日期
         keshi: '', //预约科室
         dialogVisible: false, //选择日期窗
+		tag:''    //小程序标签
       },
       mounted() {
         var url = window.location.href
@@ -104,6 +106,9 @@
           }
           this.uday = new Date().getFullYear() + '-' + cs.date
           this.keshi = decodeURI(cs.keshi)
+		  this.tag = cs.tag
+			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
+			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
         }
       },
       methods: {

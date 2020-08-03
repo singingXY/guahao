@@ -17,7 +17,6 @@
       table-layout: fixed;
       width: 100%;
       text-align: center;
-      margin-bottom: 1rem;
       border-bottom: 1px solid #262d2d;
       font-weight: 700;
       font-size: 1rem;
@@ -46,18 +45,8 @@
     th:first-child {
       background: #fff;
       color: #222;
-      width: 4.7rem;
+      width: 7.5rem;
       border-right: 0;
-    }
-
-    th:nth-child(2) {
-      background: #fff;
-      color: #222;
-      width: 2rem;
-    }
-
-    th .tks {
-      margin-left: 2rem;
     }
 
     th,
@@ -93,23 +82,39 @@
     table tr:last-child {
       border-bottom: 0;
     }
+
+    #myTable {
+      margin-bottom: 1rem;
+    }
+
+    #myTable td:nth-child(1) {
+      width: 5rem;
+    }
+
+    #myTable td:nth-child(2) {
+      width: 2.5rem;
+    }
+
+    .artnav {
+      z-index: 300;
+    max-width: 750px;
+    }
   </style>
 </head>
 
 <body class="index">
   <header>
-    <img src="./images/logo_xcx.jpg" alt="" />
-    <img src="./images/ban.jpg" alt="" />
+    <img class="headpic1" src="./images/logo_xcx.jpg" alt="" />
+    <img class="headpic2" src="./images/ban.jpg" alt="" />
     <img class="qr" src="./images/qr.png" alt="" />
   </header>
 
-  <table id="myTable">
-    <caption>同济医院特需门诊专家7月出诊信息</caption>
+  <table class="artnav">
+    <caption>同济医院特需门诊专家8月出诊信息</caption>
     <tr class="odd">
       <th>
         <div class="tks">科室</div>
       </th>
-      <th></th>
       <th>星期一</th>
       <th>星期二</th>
       <th>星期三</th>
@@ -119,6 +124,9 @@
       <th>星期日</th>
     </tr>
   </table>
+  <div id="box">
+    <table id="myTable"></table>
+  </div>
   <img class="allied" src="./images/dw.png" alt="" />
   <div class="bottom">
     <a class="tx active" href="/gh/list_xcx.html">
@@ -126,8 +134,24 @@
     <a class="pt" href="/gh/list.html">
       <img src="./images/pt2.png" alt=""> 普通门诊号</a>
   </div>
-  <script src="js/zjList.js?date=20200708"></script>
+  <script src="js/zjList.js?date=202007311626"></script>
   <script>
+		var tag = ''
+		var url = window.location.href
+        var dz_url = url.split('#')[0] //获取#之前的字符串
+        var cs = dz_url.split('?')[1] //获取?之后的参数字符串
+        if (cs) {
+          var cs_arr = cs.split('&') //参数字符串分割为数组
+          var cs = {}
+          for (var i = 0; i < cs_arr.length; i++) {
+            //遍历数组，拿到json对象
+            cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+          }
+		  if(cs.tag){
+			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
+			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
+		  }
+        }
     function week() {
       let c = ''
       for (let d = 1; d <= 7; d++) {
@@ -137,17 +161,17 @@
     }
     for (let i = 0; i < department.length; i++) {
       var tableC =
-        '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/ks_tx.html?ks='
+        '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/ks_tx.html?tag='+ cs.tag +'&ks='
         + dpm[i] + '">' + department[i]
-        + '</a></td><td>上<br>午</td>' + week() + '</tr>'
-        + '<tr class="odd" id="pm_' + i + '"><td>下<br>午</td>' + week() + '</tr>'
+        + '</a></td><td>上午</td>' + week() + '</tr>'
+        + '<tr class="odd" id="pm_' + i + '"><td>下午</td>' + week() + '</tr>'
       $('#myTable').append(tableC)
 
       for (const zjLists in zjList) {
         var zjs = zjList[zjLists]
         //如果存在排班且科室相符
         if (zjs[4] && department[i] == zjs[1]) {
-          let textHtml = '<a href="/gh/index_tx.html?zj=' + zjLists + '">' +
+          let textHtml = '<a href="/gh/index_tx.html?tag='+ cs.tag +'&zj=' + zjLists + '">' +
             zjs[0] + '<br><span>' + zjs[5] + '</span></a>'
           let hDay = zjs[3]
           if (hDay.indexOf('上午') != -1 || hDay.indexOf('下午') != -1) {
@@ -194,6 +218,20 @@
         isAppend(Num, textHtml)
       }
     }
+    $("img").on("load", function () {
+      //var oTop = $(".artnav").offset().top
+      var oTop = $(".headpic1").height() + $(".headpic2").height()
+      var sTop = 0;
+      $(window).scroll(function () {
+        sTop = $(this).scrollTop();
+       // console.log(sTop + "--" + oTop);
+        if (sTop >= oTop) {
+          $(".artnav").css({ "position": "fixed", "top": "0" });
+        } else {
+          $(".artnav").css({ "position": "static" });
+        }
+      });
+    });
   </script>
 </body>
 

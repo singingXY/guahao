@@ -151,11 +151,12 @@
       case 'pw': keShi = "普外科"; break;
       case 'gc': keShi = "肛肠科"; break;
       case 'rx': keShi = "乳腺科"; break;
-      case 'fk': keShi = "妇产科"; break;
+      case 'fk': keShi = "妇科"; break;
+      case 'nk': keShi = "泌尿外科"; break;
       case 'grk': keShi = "感染病科"; break;
       case 'zxy': keShi = "中西医 结合科"; break;
       case 'kfk': keShi = "康复科"; break;
-      case 'jzk': keShi = "急诊科"; break;
+      case 'jzk': keShi = "全科医学"; break;
       case 'yk': keShi = "眼科"; break;
     }
 
@@ -173,7 +174,7 @@
         arr.push(zjs)
         let i = arr.length //人数
         var tableC =
-          '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/index_tx.html?zj='
+          '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/index_tx.html?tag='+cs.tag+'&zj='
           + zjLists + '">' + zjs[0]
           + '<br><span>' + zjs[5] + '</span>'
           + '</a></td><td>上<br>午</td>' + week() + '</tr>'
@@ -182,7 +183,8 @@
 
         let NumA = $('#am_' + i).children('td')
         let NumB = $('#pm_' + i).children('td')
-        let textHtml = '<a class="tda" href="/gh/index_tx.html?zj=' + zjLists + '">预约</a>'
+		console.log(cs.tag)
+        var textHtml = '<a class="tda" href="/gh/index_tx.html?tag='+cs.tag+'&zj=' + zjLists + '">预约</a>'
         let zDays = zjs[4].split(';')
         for (let d = 1; d <= 7; d++) {
           if (zDays.length > 1 && parseInt(zDays) == d) {
