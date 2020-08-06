@@ -138,7 +138,7 @@
       for (var i = 0; i < cs_arr.length; i++) {
         cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
       }
-    }
+    }else{cs = {} }
     $('#header').attr("src", './images/ks/' + cs.ks + '.jpg')
     var keShi;
     switch (cs.ks) {
@@ -161,18 +161,19 @@
     }
 
     function week() {
-      let c = ''
-      for (let d = 1; d <= 7; d++) {
+      var c = ''
+      for (var d = 1; d <= 7; d++) {
         c += '<td class="week_' + d + '"></td>'
       }
       return c
     }
     var arr = []
-    for (const zjLists in zjList) {
+    var zjLists;
+    for (zjLists in zjList) {
       var zjs = zjList[zjLists]
       if (zjs[1] == keShi) {
         arr.push(zjs)
-        let i = arr.length //人数
+        var i = arr.length //人数
         var tableC =
           '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/index_tx.html?tag='+cs.tag+'&zj='
           + zjLists + '">' + zjs[0]
@@ -181,14 +182,14 @@
           + '<tr class="odd" id="pm_' + i + '"><td>下<br>午</td>' + week() + '</tr>'
         $('#myTable').append(tableC)
 
-        let NumA = $('#am_' + i).children('td')
-        let NumB = $('#pm_' + i).children('td')
+        var NumA = $('#am_' + i).children('td')
+        var NumB = $('#pm_' + i).children('td')
 		console.log(cs.tag)
         var textHtml = '<a class="tda" href="/gh/index_tx.html?tag='+cs.tag+'&zj=' + zjLists + '">预约</a>'
-        let zDays = zjs[4].split(';')
-        for (let d = 1; d <= 7; d++) {
+        var zDays = zjs[4].split(';')
+        for (var d = 1; d <= 7; d++) {
           if (zDays.length > 1 && parseInt(zDays) == d) {
-            for (let l = 0; l < zDays.length; l++) {
+            for (var l = 0; l < zDays.length; l++) {
               zjWeek = parseInt(zDays[l])
               if (zjs[3].split('/').length > 1) {
                 if (l == 0) {

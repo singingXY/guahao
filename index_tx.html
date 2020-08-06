@@ -9,10 +9,12 @@
   <meta content="telephone=no" name="format-detection" />
 
   <title>苏州同济医院_同济官网在线预约</title>
-  <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
-  <script src="/gh/js/vue@2.6.11.js"></script>
+  <link href="layout.css" rel="stylesheet" type="text/css" />
+  <script src="js/vue@2.6.11.js"></script>
   <link rel="stylesheet" href="https://xcx.sztjyy.cn/gh/js/element-ui.css" />
-  <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script> 
+  <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/rem.js"></script>
 </head>
 
 <body>
@@ -97,10 +99,8 @@
       <img src="./images/pt2.png" alt=""> 普通门诊号</a>
   </div>
   <!-- 专家列表 -->
-  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
-  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
-  <script src="https://xcx.sztjyy.cn/gh/js/zjList.js?time=20200727"></script>
-  <script src="https://xcx.sztjyy.cn/gh/js/zj.js?time=20200727"></script>
+  <script src="js/zjList.js"></script>
+  <script src="js/zj.js"></script>
 
   <script>
     var app = new Vue({
@@ -121,7 +121,7 @@
         ellipsis: true, // 是否收缩
 		tag:''    //小程序标签
       },
-      mounted() {
+      mounted: function() {
         var url = window.location.href
         var dz_url = url.split('#')[0] //获取#之前的字符串
         var cs = dz_url.split('?')[1] //获取?之后的参数字符串
@@ -136,16 +136,16 @@
 		  this.tag = cs.tag
 			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
 			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
-        }
+        }else{cs = {} }
         //默认选中第一个日期
         // var day = zjList[this.zj][2].split(';')
         // this.time = day[0]
         var maxLength = this.maxLength;
-        for (let i = 0; i < profile.length; i++) {
-          if (profile[i].pinyin == cs.zj) {
-            var contentShow = profile[i].profile;
+        for (var j = 0; j < profile.length; j++) {
+          if (profile[j].pinyin == cs.zj) {
+            var contentShow = profile[j].profile;
             contentShow = (contentShow.length > maxLength && this.ellipsis) ? contentShow.substring(0, maxLength - 3) : contentShow;
-            this.content = profile[i]
+            this.content = profile[j]
             this.contentShow = contentShow
             this.cLength = this.content.profile.length
           }
@@ -153,7 +153,7 @@
         $('.detailed ').show()
       },
       computed: {
-        zzTime() {
+        zzTime: function() {
           var time = zjList[this.zj]
           if (time) {
             return time[2].split(';')
@@ -161,14 +161,14 @@
         }
       },
       methods: {
-        currentDate(date) {
+        currentDate: function(date) {
           var myDate = new Date(date);
           var today = new Date();
           if (myDate > today) {
             return true
           }
         },
-        weekDay(day) {
+        weekDay: function(day) {
           var weekDay = [
             '周日',
             '周一',
@@ -181,17 +181,17 @@
           var myDate = new Date(Date.parse(day.replace(/-/g, '/')))
           return weekDay[myDate.getDay()]
         },
-        toDay(day) {
+        toDay: function(day) {
           if (day) {
             var dateArr = day.split('-')
             return dateArr[1] + '月' + dateArr[2] + '日'
           }
         },
-        changeIndex(index, date) {
+        changeIndex: function(index, date) {
           this.currentIndex = index
           this.time = date
         },
-        doEllipsis() {
+        doEllipsis: function() {
           var ellipsis = !this.ellipsis;
           var contentShow = this.content.profile
           var maxLength = this.maxLength;
@@ -201,7 +201,7 @@
           this.ellipsis = ellipsis
 
         },
-        apm(date) {
+        apm: function(date) {
           var ampm = zjList[this.zj][3].split('/')
           if (ampm.length > 1) {
             //王少峰专用

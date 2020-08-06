@@ -9,12 +9,12 @@
   <meta content="telephone=no" name="format-detection" />
 
   <title>苏州同济医院_同济官网在线预约</title>
-  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
-  <script src="https://xcx.sztjyy.cn/gh/js/vue@2.6.11.js"></script>
+  <link href="layout.css" rel="stylesheet" type="text/css" />
+  <script src="js/jquery.min.js"></script>
+  <script src="js/vue@2.6.11.js"></script>
   <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet" />
-  <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
   <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
-  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
+  <script src="js/rem.js"></script>
 </head>
 
 <body>
@@ -117,8 +117,8 @@
 		  
 			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
 			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
-		  console.log(cs)
-        }
+		  
+        }else{cs = {} }
       },
       methods: {
         //点击选择日期框后

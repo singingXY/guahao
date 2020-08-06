@@ -134,12 +134,13 @@
     <a class="pt" href="/gh/list.html">
       <img src="./images/pt2.png" alt=""> 普通门诊号</a>
   </div>
-  <script src="js/zjList.js?date=202007311626"></script>
+  <script src="js/zjList.js"></script>
   <script>
 		var tag = ''
 		var url = window.location.href
         var dz_url = url.split('#')[0] //获取#之前的字符串
         var cs = dz_url.split('?')[1] //获取?之后的参数字符串
+		
         if (cs) {
           var cs_arr = cs.split('&') //参数字符串分割为数组
           var cs = {}
@@ -151,7 +152,10 @@
 			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
 			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
 		  }
-        }
+        }else{
+		  cs = {}
+		  }
+		
     function week() {
       let c = ''
       for (let d = 1; d <= 7; d++) {
@@ -166,8 +170,8 @@
         + '</a></td><td>上午</td>' + week() + '</tr>'
         + '<tr class="odd" id="pm_' + i + '"><td>下午</td>' + week() + '</tr>'
       $('#myTable').append(tableC)
-
-      for (const zjLists in zjList) {
+		var zjLists;
+      for (zjLists in zjList) {
         var zjs = zjList[zjLists]
         //如果存在排班且科室相符
         if (zjs[4] && department[i] == zjs[1]) {

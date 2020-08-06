@@ -9,12 +9,12 @@
   <meta content="telephone=no" name="format-detection" />
 
   <title>苏州同济医院_同济官网在线预约</title>
+  <link href="layout.css" rel="stylesheet" type="text/css" />
   <script src="js/jquery.min.js"></script>
   <script src="js/vue@2.6.11.js"></script>
-  <link rel="stylesheet" href="js/element-ui.css" />
-  <link href="layout.css" rel="stylesheet" type="text/css" />
-  <script src="js/element-ui.js"></script>
   <script src="js/rem.js"></script>
+  <link rel="stylesheet" href="js/element-ui.css" />
+  <script src="js/element-ui.js"></script>
 </head>
 
 <body>
@@ -93,7 +93,7 @@
         dialogVisible: false, //选择日期窗
 		tag:''    //小程序标签
       },
-      mounted() {
+      mounted: function() {
         var url = window.location.href
         var dz_url = url.split('#')[0] //获取#之前的字符串
         var cs = dz_url.split('?')[1] //获取?之后的参数字符串
@@ -109,13 +109,13 @@
 		  this.tag = cs.tag
 			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
 			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
-        }
+        }else{cs = {} }
       },
       methods: {
         //点击选择日期框后
-        handleSelected(day) {
-          let today = new Date()
-          let thisDay = new Date(day)
+        handleSelected: function(day) {
+          var today = new Date()
+          var thisDay = new Date(day)
           if (today < thisDay) {
             return 'all'
           } else {
@@ -123,7 +123,7 @@
           }
         },
         //选择日期
-        selectedDay(day) {
+        selectedDay: function(day) {
           this.uday = day
           this.dialogVisible = false
         },
