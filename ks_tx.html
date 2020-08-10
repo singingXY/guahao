@@ -11,46 +11,58 @@
   <title>苏州同济医院_同济官网在线预约</title>
   <link href="layout.css" rel="stylesheet" type="text/css" />
   <script src="js/jquery.min.js"></script>
+  <script src="js/TouchSlide.1.1.js"></script>
   <script src="js/rem.js"></script>
   <style>
+    body {
+      padding-bottom: 0;
+    }
+
     table {
       table-layout: fixed;
       width: 100%;
       text-align: center;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid #262d2d;
+      border-top: 1px solid #d5e5e8;
       font-weight: 700;
       font-size: 1rem;
+      background: #f4fafa;
+    }
+
+    caption {
+      padding: 1rem 0;
+      background: #00927f;
+      font-size: 1.5rem;
+      color: #fff;
     }
 
     tr {
-      border-bottom: 1px solid #262d2d;
+      border-bottom: 1px solid #d5e5e8;
     }
 
     tr.odd td {
       border-top: 1px solid #d5e5e8;
     }
 
+
     th {
       background: #3fbabf;
       color: #fff;
     }
 
-    th:first-child {
-      background: #fff;
+    th:nth-child(1),
+    th:nth-child(2) {
+      background: #f4fafa;
       color: #222;
-      width: 4.7rem;
+    }
+
+    th:nth-child(1) {
+      text-align: right;
+      width: 5rem;
       border-right: 0;
     }
 
     th:nth-child(2) {
-      background: #fff;
-      color: #222;
-      width: 2rem;
-    }
-
-    th .tks {
-      margin-left: 2rem;
+      width: 2.5rem;
     }
 
     th,
@@ -59,6 +71,7 @@
       height: 1.8rem;
       line-height: 1.2;
       border-right: 1px solid #d5e5e8;
+      word-break: keep-all;
     }
 
     td:last-child {
@@ -66,32 +79,22 @@
     }
 
     td a {
-      color: #333;
-    }
-
-    td a.tda {
-      display: inline-block;
-      width: 90%;
-      padding: 10% 0;
-      font-weight: normal;
-      background: #00927d;
-      color: #fff;
-      border-radius: 3px;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     td span {
+      font-weight: normal;
       display: inline-block;
+      font-size: 1rem;
+      transform: scale(0.5);
+      line-height: 1.2rem;
       width: 200%;
       margin-top: -0.4rem;
-      transform: scale(0.5) translateX(-50%);
-      font-weight: normal;
-      font-size: 1.3rem;
-      line-height: 1.2rem;
     }
 
-    table tr:last-child {
-      border-bottom: 0;
-    }
 
     .allied {
       margin: 0;
@@ -99,22 +102,71 @@
       padding-bottom: 0;
     }
 
-    body {
-      padding-bottom: 0;
+    #myTable td:nth-child(1) {
+      width: 5rem;
+    }
+
+    #myTable td:nth-child(2) {
+      width: 2.5rem;
+    }
+
+    .list .bd li {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.5rem .9rem 1.2rem .6rem;
+      border-top: 1px dotted #00927f;
+    }
+
+    .list .bd img {
+      width: 4.5rem;
+      height: 4.5rem;
+    }
+
+    .list .bd .z-c {
+      width: 65%;
+    }
+
+    .list .bd .z-c h5 {
+      font-size: 1.05rem;
+      font-weight: normal;
+    }
+
+    .list .bd .z-c h5 span {
+      font-size: 1.4rem;
+      color: #00927f;
+    }
+
+    .list .bd .z-c p {
+      margin-top: 0.3rem;
+      font-size: 0.9rem;
+      line-height: 1.4rem;
+    }
+
+    .list .bd .yybtn {
+      display: inline-block;
+      margin-top: 3.5rem;
+      padding: 0 .3rem;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      text-align: center;
+      background: #00927f;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 0.8rem;
     }
   </style>
 </head>
 
 <body class="index">
   <header>
-    <img src="./images/logo_xcx.jpg" alt="" />
+    <!-- <img src="./images/logo_xcx.jpg" alt="" /> -->
     <img id="header" src="./images/ptmz_02.jpg" alt="" />
   </header>
-
   <table id="myTable">
+    <caption>同济医院特需门诊专家8月出诊信息</caption>
     <tr class="odd">
       <th>
-        <div class="tks">专家</div>
+        <div class="tks">科室</div>
       </th>
       <th></th>
       <th>星期一</th>
@@ -126,8 +178,54 @@
       <th>星期日</th>
     </tr>
   </table>
+  <div class="list" id="tabBox">
+    <div class="hd">
+      <ul>
+        <li></li>
+      </ul>
+    </div>
+    <div class="bd">
+      <ul>
+        <li onclick="goZj('温晓持')">
+          <img src="zjimg/tx/wxc.jpg" alt="温晓持">
+          <div class="z-c">
+            <h5><span>温晓持</span> 主任医师 苏大附一院</h5>
+            <p>擅长：消化道常见病及胃炎、消化性溃疡、肝硬化、内窥镜等诊治技术…【详细】</p>
+          </div>
+          <div class="yybtn">预约挂号</div>
+        </li>
+        <li onclick="goZj('严苏')">
+          <img src="zjimg/tx/ys.jpg" alt="严苏">
+          <div class="z-c">
+            <h5><span>严 苏</span> 主任医师 苏大附一院</h5>
+            <p>擅长：消化系统常见病、多发病的诊治及胃镜、肠镜、超声内镜的操作…【详细】</p>
+          </div>
+          <div class="yybtn">预约挂号</div>
+        </li>
+        <li onclick="goZj('陈志荣')">
+          <img src="zjimg/tx/czr.jpg" alt="陈志荣">
+          <div class="z-c">
+            <h5><span>陈志荣</span> 主任医师 苏州市立医院</h5>
+            <p>擅长：胰胆疾病的内镜诊治，经ERCP（内镜下逆行胰胆管造影）途径行胆总管取石和放置胆道内支架微创治疗胆总管结石和阻塞性黄疸内支架引流…【详细】</p>
+          </div>
+          <div class="yybtn">预约挂号</div>
+        </li>
+        <li onclick="goZj('王少峰')">
+          <img src="zjimg/tx/wsf.jpg" alt="王少峰">
+          <div class="z-c">
+            <h5><span>王少峰</span> 主任医师 苏大附二院</h5>
+            <p>擅长：消化道常见病及疑难、病危病例的诊治，尤其擅长消化内镜的诊疗技术，如食管曲张静脉的皮圈结扎术、硬化治疗术、胃肠息肉摘除术、粘膜切除术…【详细】</p>
+          </div>
+          <div class="yybtn">预约挂号</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script type="text/javascript">
+    TouchSlide({ slideCell: "#tabBox", effect: "leftLoop" }); 
+  </script>
   <img class="allied" src="./images/bottom.png" alt="" />
-  <script src="js/zjList.js?date=20200714"></script>
+  <script src="js/zjList.js"></script>
   <script>
     var url = window.location.href
     var dz_url = url.split('#')[0] //获取#之前的字符串
@@ -138,8 +236,8 @@
       for (var i = 0; i < cs_arr.length; i++) {
         cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
       }
-    }else{cs = {} }
-    $('#header').attr("src", './images/ks/' + cs.ks + '.jpg')
+    } else { cs = {} }
+    $('#header').attr("src", './images/ks/' + cs.ks + '.jpg?' + Math.random())
     var keShi;
     switch (cs.ks) {
       case 'xh': keShi = "消化内科"; break;
@@ -160,6 +258,11 @@
       case 'yk': keShi = "眼科"; break;
     }
 
+    function goZj(zj) {
+      window.location.href = '/gh/index_tx.html?tag=' + cs.tag + '&zj=' + zj
+    }
+
+
     function week() {
       var c = ''
       for (var d = 1; d <= 7; d++) {
@@ -167,53 +270,64 @@
       }
       return c
     }
-    var arr = []
-    var zjLists;
-    for (zjLists in zjList) {
-      var zjs = zjList[zjLists]
-      if (zjs[1] == keShi) {
-        arr.push(zjs)
-        var i = arr.length //人数
+    for (var i = 0; i < department.length; i++) {
+      if (department[i] == keShi) {
         var tableC =
-          '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/index_tx.html?tag='+cs.tag+'&zj='
-          + zjLists + '">' + zjs[0]
-          + '<br><span>' + zjs[5] + '</span>'
-          + '</a></td><td>上<br>午</td>' + week() + '</tr>'
-          + '<tr class="odd" id="pm_' + i + '"><td>下<br>午</td>' + week() + '</tr>'
+          '<tr id="am_' + i + '"><td rowspan="2" >' + department[i]
+          + '</td><td>上午</td>' + week() + '</tr>'
+          + '<tr class="odd" id="pm_' + i + '"><td>下午</td>' + week() + '</tr>'
         $('#myTable').append(tableC)
-
-        var NumA = $('#am_' + i).children('td')
-        var NumB = $('#pm_' + i).children('td')
-		console.log(cs.tag)
-        var textHtml = '<a class="tda" href="/gh/index_tx.html?tag='+cs.tag+'&zj=' + zjLists + '">预约</a>'
-        var zDays = zjs[4].split(';')
-        for (var d = 1; d <= 7; d++) {
-          if (zDays.length > 1 && parseInt(zDays) == d) {
-            for (var l = 0; l < zDays.length; l++) {
-              zjWeek = parseInt(zDays[l])
-              if (zjs[3].split('/').length > 1) {
-                if (l == 0) {
-                  isAPm(zjs[3], NumA[zjWeek + 1], '上午', textHtml)
-                } else if (l == 1) {
-                  isAPm(zjs[3], NumB[zjWeek], '下午', textHtml)
+        var zjLists;
+        for (zjLists in zjList) {
+          var zjs = zjList[zjLists]
+          //如果存在排班且科室相符
+          if (zjs[4] && department[i] == zjs[1]) {
+            var textHtml = '<a href="/gh/index_tx.html?tag=' + cs.tag + '&zj=' + zjLists + '">' +
+              zjs[0] + '<br><span>' + zjs[5] + '</span></a>'
+            var hDay = zjs[3]
+            if (hDay.indexOf('上午') != -1 || hDay.indexOf('下午') != -1) {
+              var zjWeek = parseInt(zjs[4])
+              var zDays = zjs[4].split(';')
+              var NumA = $('#am_' + i).children('td')
+              var NumB = $('#pm_' + i).children('td')
+              if (zDays.length > 1) {
+                for (var d = 0; d < zDays.length; d++) {
+                  zjWeek = parseInt(zDays[d])
+                  if (hDay.split('/').length > 1) {
+                    if (d == 0) {
+                      isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
+                    } else if (d == 1) {
+                      isAPm(hDay, NumB[zjWeek], '下午', textHtml)
+                    }
+                  } else {
+                    isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
+                    isAPm(hDay, NumB[zjWeek], '下午', textHtml)
+                  }
                 }
               } else {
-                isAPm(zjs[3], NumA[zjWeek + 1], '上午', textHtml)
-                isAPm(zjs[3], NumB[zjWeek], '下午', textHtml)
+                isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
+                isAPm(hDay, NumB[zjWeek], '下午', textHtml)
               }
             }
-          } else {
-            if (zjs[4] == d) {
-              isAPm(zjs[3], NumA[d + 1], '上午', textHtml)
-              isAPm(zjs[3], NumB[d], '下午', textHtml)
-            }
+          } else if (department[i] == zjs[1]) {
+            //科室相符未排班，隐藏
+            $('#am_' + i).hide()
+            $('#pm_' + i).hide()
           }
         }
       }
     }
+    function isAppend(Num, textHtml) {
+      //一个半日内有两位坐诊专家则追加
+      if (!Num.innerHTML) {
+        Num.innerHTML = textHtml
+      } else {
+        $(textHtml).appendTo(Num)
+      }
+    }
     function isAPm(hDay, Num, text, textHtml) {
       if (hDay.indexOf(text) != -1) {
-        $(textHtml).appendTo(Num)
+        isAppend(Num, textHtml)
       }
     }
   </script>

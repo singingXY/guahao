@@ -157,13 +157,13 @@
 		  }
 		
     function week() {
-      let c = ''
-      for (let d = 1; d <= 7; d++) {
+      var c = ''
+      for (var d = 1; d <= 7; d++) {
         c += '<td class="week_' + d + '"></td>'
       }
       return c
     }
-    for (let i = 0; i < department.length; i++) {
+    for (var i = 0; i < department.length; i++) {
       var tableC =
         '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/ks_tx.html?tag='+ cs.tag +'&ks='
         + dpm[i] + '">' + department[i]
@@ -175,16 +175,16 @@
         var zjs = zjList[zjLists]
         //如果存在排班且科室相符
         if (zjs[4] && department[i] == zjs[1]) {
-          let textHtml = '<a href="/gh/index_tx.html?tag='+ cs.tag +'&zj=' + zjLists + '">' +
+          var textHtml = '<a href="/gh/index_tx.html?tag='+ cs.tag +'&zj=' + zjLists + '">' +
             zjs[0] + '<br><span>' + zjs[5] + '</span></a>'
-          let hDay = zjs[3]
+          var hDay = zjs[3]
           if (hDay.indexOf('上午') != -1 || hDay.indexOf('下午') != -1) {
-            let zjWeek = parseInt(zjs[4])
-            let zDays = zjs[4].split(';')
-            let NumA = $('#am_' + i).children('td')
-            let NumB = $('#pm_' + i).children('td')
+            var zjWeek = parseInt(zjs[4])
+            var zDays = zjs[4].split(';')
+            var NumA = $('#am_' + i).children('td')
+            var NumB = $('#pm_' + i).children('td')
             if (zDays.length > 1) {
-              for (let d = 0; d < zDays.length; d++) {
+              for (var d = 0; d < zDays.length; d++) {
                 zjWeek = parseInt(zDays[d])
                 if (hDay.split('/').length > 1) {
                   if (d == 0) {
