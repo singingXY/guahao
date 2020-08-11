@@ -186,38 +186,7 @@
     </div>
     <div class="bd">
       <ul>
-        <li onclick="goZj('温晓持')">
-          <img src="zjimg/tx/wxc.jpg" alt="温晓持">
-          <div class="z-c">
-            <h5><span>温晓持</span> 主任医师 苏大附一院</h5>
-            <p>擅长：消化道常见病及胃炎、消化性溃疡、肝硬化、内窥镜等诊治技术…【详细】</p>
-          </div>
-          <div class="yybtn">预约挂号</div>
-        </li>
-        <li onclick="goZj('严苏')">
-          <img src="zjimg/tx/ys.jpg" alt="严苏">
-          <div class="z-c">
-            <h5><span>严 苏</span> 主任医师 苏大附一院</h5>
-            <p>擅长：消化系统常见病、多发病的诊治及胃镜、肠镜、超声内镜的操作…【详细】</p>
-          </div>
-          <div class="yybtn">预约挂号</div>
-        </li>
-        <li onclick="goZj('陈志荣')">
-          <img src="zjimg/tx/czr.jpg" alt="陈志荣">
-          <div class="z-c">
-            <h5><span>陈志荣</span> 主任医师 苏州市立医院</h5>
-            <p>擅长：胰胆疾病的内镜诊治，经ERCP（内镜下逆行胰胆管造影）途径行胆总管取石和放置胆道内支架微创治疗胆总管结石和阻塞性黄疸内支架引流…【详细】</p>
-          </div>
-          <div class="yybtn">预约挂号</div>
-        </li>
-        <li onclick="goZj('王少峰')">
-          <img src="zjimg/tx/wsf.jpg" alt="王少峰">
-          <div class="z-c">
-            <h5><span>王少峰</span> 主任医师 苏大附二院</h5>
-            <p>擅长：消化道常见病及疑难、病危病例的诊治，尤其擅长消化内镜的诊疗技术，如食管曲张静脉的皮圈结扎术、硬化治疗术、胃肠息肉摘除术、粘膜切除术…【详细】</p>
-          </div>
-          <div class="yybtn">预约挂号</div>
-        </li>
+
       </ul>
     </div>
   </div>
@@ -226,6 +195,7 @@
   </script>
   <img class="allied" src="./images/bottom.png" alt="" />
   <script src="js/zjList.js"></script>
+  <script src="js/zj.js"></script>
   <script>
     var url = window.location.href
     var dz_url = url.split('#')[0] //获取#之前的字符串
@@ -261,8 +231,26 @@
     function goZj(zj) {
       window.location.href = '/gh/index_tx.html?tag=' + cs.tag + '&zj=' + zj
     }
+    //专家列表
+    var zj;
+    for (zj in profile) {
+      if (profile[zj].department == keShi) {
+        var li =
+          ' <li onclick="goZj(' + profile[zj].name + ')">'
+          + ' <img src="./zjimg/tx/' + profile[zj].pinyin + '.png" alt="">'
+          + ' <div class="z-c">'
+          + '  <h5><span>' + profile[zj].name + '</span> 主任医师 苏大附一院</h5>'
+          + '  <p>' + profile[zj].skilled + '…【详细】</p>'
+          + ' </div>'
+          + ' <div class="yybtn">预约挂号</div>'
+          + '  </li>'
+        $('#tabBox .bd ul').append(li)
+      }
+    }
 
 
+
+    // 表格部分
     function week() {
       var c = ''
       for (var d = 1; d <= 7; d++) {
