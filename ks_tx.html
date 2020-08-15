@@ -221,6 +221,7 @@
       case 'rx': keShi = "乳腺科"; break;
       case 'fk': keShi = "妇科"; break;
       case 'nk': keShi = "泌尿外科"; break;
+      case 'gk': keShi = "骨科"; break;
       case 'grk': keShi = "感染病科"; break;
       case 'zxy': keShi = "中西医 结合科"; break;
       case 'kfk': keShi = "康复科"; break;
@@ -317,12 +318,12 @@
       for (var i = (p - 1) * PageSize; i < PageSize * p; i++) {
         if (pageData[i]) {
           var li =
-            ' <li onclick="goZj(\'' + pageData[i].name + '\')">'
+            ' <li onclick="goZj(\'' + pageData[i].pinyin + '\')">'
             + ' <img src="./zjimg/tx/' + pageData[i].pinyin + '.png" alt="">'
             + ' <div class="z-c">'
             + '  <h5><span>' + pageData[i].name + '</span> ' + pageData[i].title + ' ' + pageData[i].hospital + '</h5>'
             + ' <div class="yybtn">预约挂号</div>'
-            + '  <p>' + pageData[i].skilled + '…【详细】</p>'
+            + '  <p>' + pageData[i].sSkilled + '…【详细】</p>'
             + ' </div>'
             + '  </li>'
           $('#tabBox .page_' + p + ' ul').append(li);

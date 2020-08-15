@@ -127,7 +127,7 @@
     </tr>
   </table>
   <img class="allied" src="./images/bottom.png" alt="" />
-  <script src="js/zjList.js"></script>
+  <script src="js/zjList.js?date=20200714"></script>
   <script>
     var url = window.location.href
     var dz_url = url.split('#')[0] //获取#之前的字符串
@@ -138,7 +138,7 @@
       for (var i = 0; i < cs_arr.length; i++) {
         cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
       }
-    } else { cs = {} }
+    }else{cs = {} }
     $('#header').attr("src", './images/ks/' + cs.ks + '.jpg')
     var keShi;
     switch (cs.ks) {
@@ -175,7 +175,7 @@
         arr.push(zjs)
         var i = arr.length //人数
         var tableC =
-          '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/index_tx.html?tag=' + cs.tag + '&zj='
+          '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/index_tx.html?tag='+cs.tag+'&zj='
           + zjLists + '">' + zjs[0]
           + '<br><span>' + zjs[5] + '</span>'
           + '</a></td><td>上<br>午</td>' + week() + '</tr>'
@@ -184,8 +184,8 @@
 
         var NumA = $('#am_' + i).children('td')
         var NumB = $('#pm_' + i).children('td')
-        console.log(cs.tag)
-        var textHtml = '<a class="tda" href="/gh/index_tx.html?tag=' + cs.tag + '&zj=' + zjLists + '">预约</a>'
+		console.log(cs.tag)
+        var textHtml = '<a class="tda" href="/gh/index_tx.html?tag='+cs.tag+'&zj=' + zjLists + '">预约</a>'
         var zDays = zjs[4].split(';')
         for (var d = 1; d <= 7; d++) {
           if (zDays.length > 1 && parseInt(zDays) == d) {
