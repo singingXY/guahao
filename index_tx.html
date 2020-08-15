@@ -93,10 +93,12 @@
 
   </div>
   <div class="bottom">
-    <a class="tx active" href="/gh/list_xcx.html">
+    <a class="home" href="/gh/list_xcx.html">
+      <img src="./images/home.png" alt=""> 首 页</a>
+    <a class="tx" href="/gh/list_xcx.html">
       <img src="./images/tx.png" alt=""> 特需专家号</a>
     <a class="pt" href="/gh/list.html">
-      <img src="./images/pt2.png" alt=""> 普通门诊号</a>
+      <img src="./images/pt.png" alt=""> 专科专诊号</a>
   </div>
   <!-- 专家列表 -->
   <script src="js/zjList.js"></script>
@@ -119,9 +121,9 @@
         cLength: 0, //学术内容长度
         maxLength: 86, // 收起时最大显示文字长度
         ellipsis: true, // 是否收缩
-		tag:''    //小程序标签
+        tag: ''    //小程序标签
       },
-      mounted: function() {
+      mounted: function () {
         var url = window.location.href
         var dz_url = url.split('#')[0] //获取#之前的字符串
         var cs = dz_url.split('?')[1] //获取?之后的参数字符串
@@ -133,10 +135,11 @@
             cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
           }
           this.zj = cs.zj
-		  this.tag = cs.tag
-			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
-			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
-        }else{cs = {} }
+          this.tag = cs.tag
+          $('.home').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+          $('.pt').attr("href", "/gh/list.html?tag=" + cs.tag)
+          $('.tx').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+        } else { cs = {} }
         //默认选中第一个日期
         // var day = zjList[this.zj][2].split(';')
         // this.time = day[0]
@@ -153,7 +156,7 @@
         $('.detailed ').show()
       },
       computed: {
-        zzTime: function() {
+        zzTime: function () {
           var time = zjList[this.zj]
           if (time) {
             return time[2].split(';')
@@ -161,14 +164,14 @@
         }
       },
       methods: {
-        currentDate: function(date) {
+        currentDate: function (date) {
           var myDate = new Date(date);
           var today = new Date();
           if (myDate > today) {
             return true
           }
         },
-        weekDay: function(day) {
+        weekDay: function (day) {
           var weekDay = [
             '周日',
             '周一',
@@ -181,17 +184,17 @@
           var myDate = new Date(Date.parse(day.replace(/-/g, '/')))
           return weekDay[myDate.getDay()]
         },
-        toDay: function(day) {
+        toDay: function (day) {
           if (day) {
             var dateArr = day.split('-')
             return dateArr[1] + '月' + dateArr[2] + '日'
           }
         },
-        changeIndex: function(index, date) {
+        changeIndex: function (index, date) {
           this.currentIndex = index
           this.time = date
         },
-        doEllipsis: function() {
+        doEllipsis: function () {
           var ellipsis = !this.ellipsis;
           var contentShow = this.content.profile
           var maxLength = this.maxLength;
@@ -201,7 +204,7 @@
           this.ellipsis = ellipsis
 
         },
-        apm: function(date) {
+        apm: function (date) {
           var ampm = zjList[this.zj][3].split('/')
           if (ampm.length > 1) {
             //王少峰专用

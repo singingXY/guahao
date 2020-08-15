@@ -97,7 +97,7 @@
 
     .artnav {
       z-index: 300;
-    max-width: 750px;
+      max-width: 750px;
     }
   </style>
 </head>
@@ -129,33 +129,36 @@
   </div>
   <img class="allied" src="./images/dw.png" alt="" />
   <div class="bottom">
-    <a class="tx active" href="/gh/list_xcx.html">
+    <a class="home" href="/gh/list_xcx.html">
+      <img src="./images/home.png" alt=""> 首 页</a>
+    <a class="tx" href="/gh/list_xcx.html">
       <img src="./images/tx.png" alt=""> 特需专家号</a>
     <a class="pt" href="/gh/list.html">
-      <img src="./images/pt2.png" alt=""> 普通门诊号</a>
+      <img src="./images/pt.png" alt=""> 专科专诊号</a>
   </div>
   <script src="js/zjList.js"></script>
   <script>
-		var tag = ''
-		var url = window.location.href
-        var dz_url = url.split('#')[0] //获取#之前的字符串
-        var cs = dz_url.split('?')[1] //获取?之后的参数字符串
-		
-        if (cs) {
-          var cs_arr = cs.split('&') //参数字符串分割为数组
-          var cs = {}
-          for (var i = 0; i < cs_arr.length; i++) {
-            //遍历数组，拿到json对象
-            cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
-          }
-		  if(cs.tag){
-			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
-			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
-		  }
-        }else{
-		  cs = {}
-		  }
-		
+    var tag = ''
+    var url = window.location.href
+    var dz_url = url.split('#')[0] //获取#之前的字符串
+    var cs = dz_url.split('?')[1] //获取?之后的参数字符串
+
+    if (cs) {
+      var cs_arr = cs.split('&') //参数字符串分割为数组
+      var cs = {}
+      for (var i = 0; i < cs_arr.length; i++) {
+        //遍历数组，拿到json对象
+        cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+      }
+      if (cs.tag) {
+        $('.home').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+        $('.pt').attr("href", "/gh/list.html?tag=" + cs.tag)
+        $('.tx').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+      }
+    } else {
+      cs = {}
+    }
+
     function week() {
       var c = ''
       for (var d = 1; d <= 7; d++) {
@@ -165,17 +168,17 @@
     }
     for (var i = 0; i < department.length; i++) {
       var tableC =
-        '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/ks_tx.html?tag='+ cs.tag +'&ks='
+        '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/ks_tx.html?tag=' + cs.tag + '&ks='
         + dpm[i] + '">' + department[i]
         + '</a></td><td>上午</td>' + week() + '</tr>'
         + '<tr class="odd" id="pm_' + i + '"><td>下午</td>' + week() + '</tr>'
       $('#myTable').append(tableC)
-		var zjLists;
+      var zjLists;
       for (zjLists in zjList) {
         var zjs = zjList[zjLists]
         //如果存在排班且科室相符
         if (zjs[4] && department[i] == zjs[1]) {
-          var textHtml = '<a href="/gh/index_tx.html?tag='+ cs.tag +'&zj=' + zjLists + '">' +
+          var textHtml = '<a href="/gh/index_tx.html?tag=' + cs.tag + '&zj=' + zjLists + '">' +
             zjs[0] + '<br><span>' + zjs[5] + '</span></a>'
           var hDay = zjs[3]
           if (hDay.indexOf('上午') != -1 || hDay.indexOf('下午') != -1) {
@@ -228,7 +231,7 @@
       var sTop = 0;
       $(window).scroll(function () {
         sTop = $(this).scrollTop();
-       // console.log(sTop + "--" + oTop);
+        // console.log(sTop + "--" + oTop);
         if (sTop >= oTop) {
           $(".artnav").css({ "position": "fixed", "top": "0" });
         } else {

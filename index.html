@@ -75,10 +75,12 @@
       </el-calendar>
     </el-dialog>
     <div class="bottom">
+      <a class="home" href="/gh/list_xcx.html">
+        <img src="./images/home.png" alt=""> 首 页</a>
       <a class="tx" href="/gh/list_xcx.html">
-        <img src="./images/tx2.png" alt=""> 特需专家号</a>
-      <a class="pt active" href="/gh/list.html">
-        <img src="./images/pt.png" alt=""> 普通门诊号</a>
+        <img src="./images/tx.png" alt=""> 特需专家号</a>
+      <a class="pt" href="/gh/list.html">
+        <img src="./images/pt.png" alt=""> 专科专诊号</a>
     </div>
   </div>
   <script>
@@ -91,9 +93,9 @@
         uday: '', //预约日期
         keshi: '', //预约科室
         dialogVisible: false, //选择日期窗
-		tag:''    //小程序标签
+        tag: ''    //小程序标签
       },
-      mounted: function() {
+      mounted: function () {
         var url = window.location.href
         var dz_url = url.split('#')[0] //获取#之前的字符串
         var cs = dz_url.split('?')[1] //获取?之后的参数字符串
@@ -106,14 +108,15 @@
           }
           this.uday = new Date().getFullYear() + '-' + cs.date
           this.keshi = decodeURI(cs.keshi)
-		  this.tag = cs.tag
-			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
-			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
-        }else{cs = {} }
+          this.tag = cs.tag
+          $('.home').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+          $('.pt').attr("href", "/gh/list.html?tag=" + cs.tag)
+          $('.tx').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+        } else { cs = {} }
       },
       methods: {
         //点击选择日期框后
-        handleSelected: function(day) {
+        handleSelected: function (day) {
           var today = new Date()
           var thisDay = new Date(day)
           if (today < thisDay) {
@@ -123,7 +126,7 @@
           }
         },
         //选择日期
-        selectedDay: function(day) {
+        selectedDay: function (day) {
           this.uday = day
           this.dialogVisible = false
         },

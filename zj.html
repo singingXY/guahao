@@ -20,10 +20,7 @@
 <body>
   <div id="app">
     <header>
-        <el-image
-          :src="'https://xcx.sztjyy.cn/gh/img/' + this.zj + '.jpg'"
-          :onerror="defaultImg"
-        ></el-image>
+      <el-image :src="'https://xcx.sztjyy.cn/gh/img/' + this.zj + '.jpg'" :onerror="defaultImg"></el-image>
     </header>
     <h5 class="title">苏州同济医院预约挂号中心</h5>
     <el-form class="bd" label-position="right" id="gh_form" action="https://xcx.sztjyy.cn/plus/diy.php"
@@ -78,10 +75,12 @@
     </el-dialog>
 
     <div class="bottom">
+      <a class="home" href="/gh/list_xcx.html">
+        <img src="./images/home.png" alt=""> 首 页</a>
       <a class="tx" href="/gh/list_xcx.html">
-        <img src="https://xcx.sztjyy.cn/gh/images/tx2.png" alt=""> 特需专家号</a>
-      <a class="pt active" href="/gh/list.html">
-        <img src="https://xcx.sztjyy.cn/gh/images/pt.png" alt=""> 普通门诊号</a>
+        <img src="./images/tx.png" alt=""> 特需专家号</a>
+      <a class="pt" href="/gh/list.html">
+        <img src="./images/pt.png" alt=""> 专科专诊号</a>
     </div>
   </div>
   <script>
@@ -95,7 +94,7 @@
         uday: '', //预约日期
         keshi: '妇科', //预约科室
         dialogVisible: false, //选择日期窗
-		tag:''    //小程序标签
+        tag: ''    //小程序标签
       },
       mounted() {
         var url = window.location.href
@@ -112,13 +111,14 @@
             this.uday = new Date().getFullYear() + '-' + cs.date
           }
           this.keshi = decodeURI(cs.keshi)
-		  this.zj = cs.zj
-		  this.tag = cs.tag
-		  
-			$('.pt').attr("href","/gh/list.html?tag="+cs.tag)
-			$('.tx').attr("href","/gh/list_xcx.html?tag="+cs.tag)
-		  
-        }else{cs = {} }
+          this.zj = cs.zj
+          this.tag = cs.tag
+
+          $('.home').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+          $('.pt').attr("href", "/gh/list.html?tag=" + cs.tag)
+          $('.tx').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+
+        } else { cs = {} }
       },
       methods: {
         //点击选择日期框后

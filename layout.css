@@ -371,24 +371,31 @@ header img {
 }
 .bottom a {
   display: block;
-  width: 50%;
-  padding: 1.1rem 0 1.2rem;
+  padding: 0.6rem 0;
   line-height: 1.6rem;
-  color: #333;
-  border-top: solid 1px #b9b9b9;
   border-bottom: 0;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   background: #fff;
-}
-.bottom a.active {
-  background: #e60012;
-  color: #fff;
-  border-color: #e60012;
+  color: #525252;
 }
 .bottom a img {
   height: 1.6rem;
 }
-
+.bottom .tx,
+.bottom .pt {
+  width: 36.8%;
+  color: #fff;
+}
+.bottom .tx {
+  background: #008f7c;
+}
+.bottom .pt {
+  background: #f18738;
+}
+.bottom .home {
+  width: 26.4%;
+  border-top: solid 1px #d8d8d8;
+}
 .detailed {
   position: relative;
   top: -1.1rem;
@@ -420,7 +427,12 @@ header img {
   padding-left: 10rem;
   width: 1.2rem;
   height: 1.75rem;
-  background-image: linear-gradient( to right, rgba(245, 249, 250, 0), rgba(245, 249, 250,.8), rgb(245, 249, 250) );
+  background-image: linear-gradient(
+    to right,
+    rgba(245, 249, 250, 0),
+    rgba(245, 249, 250, 0.8),
+    rgb(245, 249, 250)
+  );
 }
 .detailed .more .ro {
   vertical-align: baseline;
