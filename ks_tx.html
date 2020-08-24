@@ -88,6 +88,7 @@
     td span {
       font-weight: normal;
       display: inline-block;
+      word-break: break-all;
       font-size: 1rem;
       transform: scale(0.5);
       line-height: 1.2rem;
@@ -321,7 +322,7 @@
             ' <li onclick="goZj(\'' + pageData[i].pinyin + '\')">'
             + ' <img src="./zjimg/tx/' + pageData[i].pinyin + '.png" alt="">'
             + ' <div class="z-c">'
-            + '  <h5><span>' + pageData[i].name + '</span> ' + pageData[i].title + ' ' + pageData[i].hospital + '</h5>'
+            + '  <h5><span>' + pageData[i].name + '</span> ' + pageData[i].title + '<br>' + pageData[i].hospital + '</h5>'
             + ' <div class="yybtn">预约挂号</div>'
             + '  <p>' + pageData[i].sSkilled + '…【详细】</p>'
             + ' </div>'
