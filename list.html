@@ -83,9 +83,16 @@
 
 
     for (var k = 0; k < outpatient.length; k++) {
-      document.getElementById('tableLeft').innerHTML +=
-        '<div class="tr"><a href="/gh/ks_pt.html?tag=' + cs.tag + '&ks='
-        + ksc[k] + '">' + outpatient[k] + '</a></div>'
+      var kk = ksc[k]
+      if (kk === 'kf' || kk === 'sn' || kk === 'xh' || kk === 'fk' || kk === 'mn' || kk === 'gc' || kk === 'by' || kk === 'js' || kk === 'gw' || kk === 'xn' || kk === 'zl') {
+        document.getElementById('tableLeft').innerHTML +=
+          '<div class="tr"><a href="/gh/ks_pt.html?tag=' + cs.tag + '&ks='
+          + ksc[k] + '">' + outpatient[k] + '</a></div>'
+      } else {
+
+        document.getElementById('tableLeft').innerHTML +=
+          '<div class="tr">' + outpatient[k] + '</div>'
+      }
 
       document.getElementById('content').innerHTML += '<div id="ks_' + k + '" class="tr"></div>'
       document.getElementById('ks_' + k).innerHTML = td(outpatient[k])

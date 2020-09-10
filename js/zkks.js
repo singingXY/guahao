@@ -39,9 +39,9 @@ var outpatient = [
   '不孕门诊', '乳腺科', '内分泌科', '耳鼻咽喉科', '眼科', '骨科', '口腔科', '肝胆内科', '体检科'
 ]
 var ksc = [
-  'kf', 'ln', 'sj', 'xn', 'hx', 'xh', 'gc',
-  'zl', 'zy', 'zxy', 'pf', 'yc', 'mn', 'xgn',
-  'pw', 'sq', 'jz', 'js', 'fk', 'jhsy', 'wjjq',
+  'kf', 'ln', 'sn', 'xn', 'hx', 'xh', 'gc',
+  'zl', 'zy', 'zxy', 'pf', 'yc', 'mn', 'mn',
+  'pw', 'sq', 'jz', 'js', 'fk', 'fk', 'wjjq',
   'by', 'rx', 'nfm', 'ebh', 'yk', 'gw', 'kq', 'gd', 'tj',
 ]
 
