@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="telephone=no" name="format-detection" />
+
+  <title>苏州同济医院_同济官网在线预约</title>
+  <link href="layout.css" rel="stylesheet" type="text/css" />
+  <script src="js/jquery.min.js"></script>
+  <script src="js/rem.js"></script>
+  <style>
+    body {
+      padding-bottom: 0;
+    }
+
+    .table {
+      margin: 1rem 0;
+    }
+
+    .table .tr {
+      height: 2.6rem;
+    }
+
+    .table .table-head {
+      height: 3.5rem;
+    }
+
+    .table .td a {
+      color: #20b59a;
+    }
+
+    .list .hd {
+      display: none;
+    }
+
+    .list .bd li {
+      overflow: hidden;
+      padding: 1.5rem .9rem 1.2rem .6rem;
+      border-top: 1px dotted #00927f;
+    }
+
+    .list .bd img {
+      float: left;
+      width: 4.5rem;
+      height: 4.5rem;
+    }
+
+    .list .bd .z-c {
+      float: right;
+      width: 80%;
+    }
+
+    .list .bd .z-c h5 {
+      font-size: 1.05rem;
+      font-weight: normal;
+    }
+
+    .list .bd .z-c h5 span {
+      font-size: 1.4rem;
+      color: #00927f;
+    }
+
+    .list .bd .z-c p {
+      width: 81.5%;
+      margin-top: 0.3rem;
+      font-size: 0.9rem;
+      line-height: 1.4rem;
+    }
+
+    .list .bd .yybtn {
+      float: right;
+      display: block;
+      margin-top: 1.2rem;
+      padding: 0 .3rem;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      text-align: center;
+      background: #00927f;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    .table-left .top-left {
+      flex-direction: column;
+      background: url(./images/line.png) 0 0 no-repeat;
+      background-size: 100% 100%;
+      font-weight: normal;
+    }
+
+    .top-left p {
+      width: 75%;
+    }
+  </style>
+</head>
+
+<body class="index">
+  <header>
+    <img id="header" src="./images/ptmz_02.jpg" alt="" />
+  </header>
+  <div class="table">
+    <div class="table-left" id="tableLeft">
+      <div class="tr top-left">
+        <p style="text-align:right">日期</p>
+        <p style="text-align:left">科室</p>
+      </div>
+    </div>
+    <div class="table-right">
+      <div class="tr table-head" id="tableHead"></div>
+      <div id="content"></div>
+    </div>
+  </div>
+  <div class="list" id="tabBox">
+    <div class="hd">
+      <ul>
+        <li></li>
+      </ul>
+    </div>
+    <div class="bd"></div>
+  </div>
+  <img class="allied" src="./images/bottom.png" alt="" />
+  <script src="./js/zjList.js"></script>
+  <script src="./js/zj.js"></script>
+  <script src="./js/zkks.js"></script>
+  <script>
+    var url = window.location.href
+    var dz_url = url.split('#')[0] //获取#之前的字符串
+    var cs = dz_url.split('?')[1] //获取?之后的参数字符串
+    if (cs) {
+      var cs_arr = cs.split('&') //参数字符串分割为数组
+      var cs = {}
+      for (var i = 0; i < cs_arr.length; i++) {
+        cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+      }
+      if (cs.tag) {
+        var tag = cs.tag
+        $('.home').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+        $('.pt').attr("href", "/gh/list.html?tag=" + cs.tag)
+        $('.tx').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+      }
+    } else { cs = {} }
+    $('#header').attr("src", './images/ks/' + cs.ks + '.jpg?' + Math.random())
+    var keShi;
+    switch (cs.ks) {
+      case 'kf': keShi = "康复医学科"; break;
+      case 'sn': keShi = "神经内科"; break;
+      case 'xh': keShi = "消化内科"; break;
+      case 'fk': keShi = "妇科"; break;
+      case 'mn': keShi = "泌尿外科"; break;
+      case 'gc': keShi = "中医肛肠科"; break;
+      case 'by': keShi = "不孕不育科"; break;
+      case 'js': keShi = "结石门诊"; break;
+      case 'gw': keShi = "骨外科"; break;
+      case 'xn': keShi = "心内科"; break;
+      case 'zl': keShi = "肿瘤科"; break;
+    }
+
+    function goZj(zj) {
+      window.location.href = '/gh/index_tx.html?tag=' + cs.tag + '&zj=' + zj
+    }
+
+    //专家列表
+    var pageData = [];
+    var zj;
+    for (zj in profile) {
+      if (profile[zj].department == keShi) {
+        pageData.push(profile[zj]);
+      }
+    }
+    var Count = pageData.length;//记录条数
+    var PageSize = 4;//设置每页示数目
+    var PageCount = Math.ceil(Count / PageSize);//计算总页数
+    var currentPage = 1;//当前页，默认为1。
+    for (var p = 1; p <= PageCount; p++) {
+      $('#tabBox .bd').append('<div class="page_' + p + '"><ul></ul></div>');
+      for (var i = (p - 1) * PageSize; i < PageSize * p; i++) {
+        if (pageData[i]) {
+          var li =
+            ' <li onclick="goZj(\'' + pageData[i].pinyin + '\')">'
+            + ' <img src="./zjimg/tx/' + pageData[i].pinyin + '.png" alt="">'
+            + ' <div class="z-c">'
+            + '  <h5><span>' + pageData[i].name + '</span> ' + pageData[i].title + '<br>' + pageData[i].hospital + '</h5>'
+            + ' <div class="yybtn">预约挂号</div>'
+            + '  <p>' + pageData[i].sSkilled + '…【详细】</p>'
+            + ' </div>'
+            + '  </li>'
+          $('#tabBox .page_' + p + ' ul').append(li);
+        }
+      }
+    }
+
+
+    for (var k = 0; k < outpatient.length; k++) {
+      if (ksc[k] == cs.ks) {
+        document.getElementById('tableLeft').innerHTML +=
+          '<div class="tr">' + outpatient[k] + '</div>'
+        document.getElementById('content').innerHTML += '<div id="ks_' + k + '" class="tr"></div>'
+        document.getElementById('ks_' + k).innerHTML = td(outpatient[k])
+
+      }
+    }
+  </script>
+
+</body>
+
+</html>
