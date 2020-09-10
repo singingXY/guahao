@@ -19,14 +19,22 @@
 
 <body>
   <div id="app">
-    <header>
-      <el-image :src="'https://xcx.sztjyy.cn/gh/img/' + this.zj + '.jpg'" :onerror="defaultImg"></el-image>
-    </header>
-    <h5 class="title">苏州同济医院预约挂号中心</h5>
+    <div class="zjban">
+      <el-image :src="'https://xcx.sztjyy.cn/gh/zjimg/' + this.zj + '.jpg'" :onerror="defaultImg"></el-image>
+    </div>
+    <div class="detailed">
+      <h5><img src="https://xcx.sztjyy.cn/gh/images/d1.png" alt="">专业擅长</h5>
+      <p>{{content.skilled}}</p>
+      <h5><img src="https://xcx.sztjyy.cn/gh/images/d2.png" alt="">学术领域</h5>
+      <p><span class="more" :class=" ellipsis ? '' : 'ellipsis' " v-if="cLength >= maxLength" @click="doEllipsis()"><img
+            class="ro" src="https://xcx.sztjyy.cn/gh/images/arr.png" alt=">"></span>
+        {{contentShow}}
+      </p>
+    </div>
     <el-form class="bd" label-position="right" id="gh_form" action="https://xcx.sztjyy.cn/plus/diy.php"
       enctype="multipart/form-data" method="post">
       <input type="hidden" name="action" value="post" />
-      <input type="hidden" name="diyid" value="2" />
+      <input type="hidden" name="diyid" value="1" />
       <input type="hidden" name="do" value="2" />
       <el-form-item label="">
         <el-input name="name" id="name" v-model="name" placeholder="请输入您的姓名"></el-input>
@@ -42,6 +50,7 @@
           @focus="dialogVisible = true">
         </el-input>
       </el-form-item>
+      <input type="hidden" name="doctor" id="doctor" v-model="this.yyzj" />
       <input type="hidden" name="url" id="url" v-model="document.location.href" />
       <input type="hidden" name="tag" id="tag" v-model="tag" />
       <input type="hidden" name="now" id="now" v-model="new Date().toLocaleString()" />
@@ -83,17 +92,24 @@
         <img src="./images/pt.png" alt=""> 专科专诊号</a>
     </div>
   </div>
+  <script src="js/zj.js"></script>
   <script>
     var app = new Vue({
       el: '#app',
       data: {
         defaultImg: 'this.src="https://xcx.sztjyy.cn/gh/images/ptmz_02.jpg"', //默认图
         zj: '',
+        yyzj: '',
         name: '', //姓名
         tel: '', //电话
         uday: '', //预约日期
         keshi: '妇科', //预约科室
         dialogVisible: false, //选择日期窗
+        content: {},
+        contentShow: '', // 真实显示的内容
+        cLength: 0, //学术内容长度
+        maxLength: 86, // 收起时最大显示文字长度
+        ellipsis: true, // 是否收缩
         tag: ''    //小程序标签
       },
       mounted() {
@@ -119,6 +135,19 @@
           $('.tx').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
 
         } else { cs = {} }
+
+
+        var maxLength = this.maxLength;
+        for (var j = 0; j < profileYS.length; j++) {
+          if (profileYS[j].pinyin == cs.zj) {
+            this.yyzj = profileYS[j].name
+            var contentShow = profileYS[j].profile;
+            contentShow = (contentShow.length > maxLength && this.ellipsis) ? contentShow.substring(0, maxLength - 3) : contentShow;
+            this.content = profileYS[j]
+            this.contentShow = contentShow
+            this.cLength = this.content.profile.length
+          }
+        }
       },
       methods: {
         //点击选择日期框后
@@ -135,6 +164,17 @@
         selectedDay(day) {
           this.uday = day
           this.dialogVisible = false
+        },
+
+        doEllipsis: function () {
+          var ellipsis = !this.ellipsis;
+          var contentShow = this.content.profile
+          var maxLength = this.maxLength;
+          // 如果内容长度少于10，则不截取;否则处于收起状态，截取7个文字并加上省略号
+          contentShow = (contentShow.length > maxLength && ellipsis) ? contentShow.substring(0, maxLength - 3) : contentShow;
+          this.contentShow = contentShow
+          this.ellipsis = ellipsis
+
         },
       },
     })
