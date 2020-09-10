@@ -95,6 +95,10 @@
     .top-left p {
       width: 75%;
     }
+
+    .bd {
+      padding: 0;
+    }
   </style>
 </head>
 
@@ -123,6 +127,14 @@
     <div class="bd"></div>
   </div>
   <img class="allied" src="./images/bottom.png" alt="" />
+  <div class="bottom">
+    <a class="home" href="/gh/list_xcx.html">
+      <img src="./images/home.png" alt=""> 首 页</a>
+    <a class="tx" href="/gh/list_xcx.html">
+      <img src="./images/tx.png" alt=""> 特需专家号</a>
+    <a class="pt" href="/gh/list.html">
+      <img src="./images/pt.png" alt=""> 专科专诊号</a>
+  </div>
   <script src="./js/zjList.js"></script>
   <script src="./js/zj.js"></script>
   <script src="./js/zkks.js"></script>
@@ -166,9 +178,9 @@
     //专家列表
     var pageData = [];
     var zj;
-    for (zj in profile) {
-      if (profile[zj].department == keShi) {
-        pageData.push(profile[zj]);
+    for (zj in profileYS) {
+      if (profileYS[zj].department == keShi) {
+        pageData.push(profileYS[zj]);
       }
     }
     var Count = pageData.length;//记录条数
@@ -179,12 +191,17 @@
       $('#tabBox .bd').append('<div class="page_' + p + '"><ul></ul></div>');
       for (var i = (p - 1) * PageSize; i < PageSize * p; i++) {
         if (pageData[i]) {
+          var depart = pageData[i].department;
+          if (pageData[i].departmentA) {
+            depart = pageData[i].departmentA
+          }
           var li =
             ' <li onclick="goZj(\'' + pageData[i].pinyin + '\')">'
             + ' <img src="./zjimg/tx/' + pageData[i].pinyin + '.png" alt="">'
             + ' <div class="z-c">'
-            + '  <h5><span>' + pageData[i].name + '</span> ' + pageData[i].title + '<br>' + pageData[i].hospital + '</h5>'
-            + ' <div class="yybtn">预约挂号</div>'
+            + '  <h5><span>' + pageData[i].name + '</span> ' + pageData[i].title
+            + '  <br>' + depart + ' ' + pageData[i].hospital + '</h5>'
+            + '  <div class="yybtn">预约挂号</div>'
             + '  <p>' + pageData[i].sSkilled + '…【详细】</p>'
             + ' </div>'
             + '  </li>'
