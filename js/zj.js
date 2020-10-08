@@ -242,7 +242,7 @@ var profile = [
   {
     pinyin: 'huangkaimei',
     name: '黄开梅',
-    title: '副主任医师',
+    title: '主任医师',
     hospital: '苏州市立医院东区神经内科',
     department: '神经内科',
     skilled: '擅长脑血管病，周围神经病，肌电图等诊治。以及头痛头晕及焦虑障碍，癫痫，帕金森病等神经系统变性疾病的诊断与治疗。',

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="telephone=no" name="format-detection" />
+
+  <title>苏州同济医院_同济官网在线预约</title>
+  <link href="/gh/layout.css" rel="stylesheet" type="text/css" />
+  <script src="/gh/js/jquery.min.js"></script>
+  <script src="/gh/js/rem.js"></script>
+  <style>
+    body {
+      padding-bottom: 0;
+    }
+    .bd {
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body class="index">
+  <header>
+    <img id="header" src="zyk.jpg" alt="" />
+  </header>
+
+  <div class="list" id="tabBox">
+    <div class="hd">
+      <ul>
+        <li></li>
+      </ul>
+    </div>
+    <div class="bd"></div>
+  </div>
+  <img class="allied" src="/gh/images/bottom.png" alt="" />
+  <div class="bottom">
+    <a class="home" href="/gh/list_xcx.html">
+      <img src="/gh/images/home.png" alt=""> 首 页</a>
+    <a class="tx" href="/gh/list_xcx.html">
+      <img src="/gh/images/tx.png" alt=""> 特需专家号</a>
+    <a class="pt" href="/gh/list.html">
+      <img src="/gh/images/pt.png" alt=""> 专科专诊号</a>
+  </div>
+  <script src="/gh/js/zjList.js"></script>
+  <script src="zj.js"></script>
+  <!-- <script src="/gh/js/zkks.js"></script> -->
+  <script>
+    var url = window.location.href
+    var dz_url = url.split('#')[0] //获取#之前的字符串
+    var cs = dz_url.split('?')[1] //获取?之后的参数字符串
+    if (cs) {
+      var cs_arr = cs.split('&') //参数字符串分割为数组
+      var cs = {}
+      for (var i = 0; i < cs_arr.length; i++) {
+        cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+      }
+      if (cs.tag) {
+        var tag = cs.tag
+        $('.home').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+        $('.pt').attr("href", "/gh/list.html?tag=" + cs.tag)
+        $('.tx').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+      }
+    } else { cs = {} }
+	cs.ks='gf'
+    var keShi= "膏方门诊";
+
+    function goZj(zj) {
+      window.location.href = '/gh/index_tx.html?tag=' + cs.tag + '&zj=' + zj
+    }
+
+    //专家列表
+    var pageData = [];
+    var zj;
+    for (zj in profile) {
+        pageData.push(profile[zj]);
+    }
+      $('#tabBox .bd').append('<div class="page_"><ul></ul></div>');
+      for (var i = 0; i < pageData.length; i++) {
+        if (pageData[i]) {
+          var li =
+            ' <li onclick="goZj(\'' + pageData[i].pinyin + '\')">'
+            + ' <img src="/gh/zjimg/tx/' + pageData[i].pinyin + '.png" alt="">'
+            + ' <div class="z-c">'
+            + '  <h5><span>' + pageData[i].name + '</span> ' + pageData[i].title
+            + '  <br>' + pageData[i].hospital + '</h5>'
+            + '  <div class="yybtn">预约挂号</div>'
+            + '  <p>' + pageData[i].sSkilled + '…【详细】</p>'
+            + ' </div>'
+            + '  </li>'
+          $('#tabBox .page_ ul').append(li);
+        }
+      }
+  </script>
+
+</body>
+
+</html>
