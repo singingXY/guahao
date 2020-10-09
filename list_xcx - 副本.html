@@ -173,20 +173,12 @@
         + dpm[i] + '">' + department[i]
         + '</a></td><td>上午</td>' + week() + '</tr>'
         + '<tr class="odd" id="pm_' + i + '"><td>下午</td>' + week() + '</tr>'
-		  if(dpm[i] == 'zyk'){
-		  //膏方门诊
-			  var tableC =
-				'<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/zt/1018gf/?tag=' + cs.tag + '&ks='
-				+ dpm[i] + '">膏方门诊</a></td><td>上午</td>' + week() + '</tr>'
-				+ '<tr class="odd" id="pm_' + i + '"><td>下午</td>' + week() + '</tr>'
-		  }
       $('#myTable').append(tableC)
       var zjLists;
       for (zjLists in zjList) {
         var zjs = zjList[zjLists]
         //如果存在排班且科室相符
         if (zjs[4] && department[i] == zjs[1]) {
-		
           var textHtml = '<a href="/gh/index_tx.html?tag=' + cs.tag + '&zj=' + zjLists + '">' +
             zjs[0] + '<br><span>' + zjs[5] + '</span></a>'
           var hDay = zjs[3]
