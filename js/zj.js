@@ -523,7 +523,7 @@ var profile = [
     pinyin: 'zhangling',
     name: '张玲',
     title: '主任中医师',
-    hospital: '苏大附一院中西医结合科副主任',
+    hospital: '苏大附一院中西医结合科',
     department: '中医科',
     skilled: '擅长：妇科病、肾脏病、免疫病、肿瘤疾病的中西医结合诊治。',
     sSkilled: '擅长：妇科病、肾脏病、免疫病、肿瘤疾病的中西医结合诊治',
