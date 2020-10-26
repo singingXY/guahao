@@ -23,7 +23,7 @@
     }
 
     caption {
-      padding: 1.5rem 0;
+      padding: 0.7rem 0;
       background: #00927f;
       font-size: 1.5rem;
       color: #fff;
@@ -108,11 +108,11 @@
     <img class="headpic1" src="./images/logo_xcx.jpg" alt="" />
     <img class="headpic2" src="./images/ban.jpg" alt="" />
    <!--  <img class="qr" src="./images/qr.png" alt="" /> -->
-   <a href="/gh/zt/1018gf/"> <img src="/gh/zt/1018gf/gf.jpg" alt="" /></a>
+   <a href="/gh/zt/1018gf/?tag=banner"> <img src="/gh/zt/1018gf/gf.jpg" alt="" /></a>
   </header>
 
   <table class="artnav">
-    <caption>同济医院特需门诊专家10月出诊信息</caption>
+    <caption>同济医院特聘专家出诊信息</caption>
     <tr class="odd">
       <th>
         <div class="tks">科室</div>
@@ -200,8 +200,10 @@
               for (var d = 0; d < zDays.length; d++) {
                 zjWeek = parseInt(zDays[d])
                 if (hDay.split('/').length > 1) {
+				  //王少峰专用
                   if (d == 0) {
                     isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
+                    isAPm(hDay, NumB[zjWeek], '下午', textHtml)
                   } else if (d == 1) {
                     isAPm(hDay, NumB[zjWeek], '下午', textHtml)
                   }
