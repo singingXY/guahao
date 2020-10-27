@@ -267,11 +267,13 @@
                 for (var d = 0; d < zDays.length; d++) {
                   zjWeek = parseInt(zDays[d])
                   if (hDay.split('/').length > 1) {
-                    if (d == 0) {
-                      isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
-                    } else if (d == 1) {
-                      isAPm(hDay, NumB[zjWeek], '下午', textHtml)
-                    }
+                    //王少峰专用
+					  if (d == 0) {
+						isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
+						isAPm(hDay, NumB[zjWeek], '下午', textHtml)
+					  } else if (d == 1) {
+						isAPm(hDay, NumB[zjWeek], '下午', textHtml)
+					  }
                   } else {
                     isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
                     isAPm(hDay, NumB[zjWeek], '下午', textHtml)
