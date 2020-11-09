@@ -252,9 +252,18 @@
         $('#myTable').append(tableC)
         var zjLists;
         for (zjLists in zjList) {
-          var zjs = zjList[zjLists]
-          //如果存在排班且科室相符
-          if (zjs[4] && department[i] == zjs[1]) {
+            var zjs = zjList[zjLists]
+            //如果存在排班且科室相符
+			var zjDepart = zjs[1]
+			var departTure = zjs[4] && department[i] == zjDepart
+			var departTure2 = false; 
+			//存在多个科室
+			var moreDepart =  zjs[1].split(';')
+			if(moreDepart.length > 1){
+			  departTure = zjs[4] && department[i] == moreDepart[0]
+			  var departTure2 = zjs[4] && department[i] == moreDepart[1]
+			}
+			if (departTure || departTure2) {
             var textHtml = '<a href="/gh/index_tx.html?tag=' + cs.tag + '&zj=' + zjLists + '">' +
               zjs[0] + '<br><span>' + zjs[5] + '</span></a>'
             var hDay = zjs[3]
