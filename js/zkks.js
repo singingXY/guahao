@@ -61,7 +61,7 @@ function td (ks) {
     ) {
       tds = tds + '<div class="td">无号</div>'
     } else {
-      tds = tds + '<div class="td"><a href="/gh/?tag=' + tag + '&keshi=' + ks + '&date=' + weekArr(getOneWeekData()[j].monthDate) + '">有号</a></div>'
+      tds = tds + '<div class="td"><a href="/gh/index.html?tag=' + tag + '&keshi=' + ks + '&date=' + weekArr(getOneWeekData()[j].monthDate) + '">有号</a></div>'
     }
   }
   return tds;

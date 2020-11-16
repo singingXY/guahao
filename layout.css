@@ -502,3 +502,7 @@ header img {
       border-radius: 4px;
       font-size: 0.8rem;
     }
+
+	.el-message{
+		min-width: 60%;
+	}
