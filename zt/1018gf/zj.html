@@ -9,22 +9,21 @@
   <meta content="telephone=no" name="format-detection" />
 
   <title>苏州同济医院_同济官网在线预约</title>
-  <link href="/gh/layout.css" rel="stylesheet" type="text/css" />
-  <script src="/gh/js/vue@2.6.11.js"></script>
-  <link rel="stylesheet" href="https://xcx.sztjyy.cn/gh/js/element-ui.css" />
+  <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet" />
+  <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
+  <script src="https://xcx.sztjyy.cn/gh/js/vue@2.6.11.js"></script>
   <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
-  <script src="/gh/js/jquery.min.js"></script>
-  <script src="/gh/js/rem.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
 </head>
 
 <body>
   <style>
-    .detailed {
-		display: none;
-		background: #faf9f5;}
+    .detailed {display: none;background: #faf9f5;}
 	.detailed .more {background-image: linear-gradient( to right, rgba(250, 249, 245, 0), rgba(250, 249, 245, 0.8), rgb(250, 249, 245) );}
 	.visit-date .active {background: #865c31;}
 	.bottom .tx {background: #865c31;}
+    .el-message {min-width: 60%;}
   </style>
   <div id="app">
     <div class="zjban">
@@ -39,16 +38,12 @@
         {{contentShow}}
       </p>
     </div>
-    <el-form class="bd" label-position="right" id="gh_form" action="https://xcx.sztjyy.cn/plus/diy.php"
-      enctype="multipart/form-data" method="post">
-      <input type="hidden" name="action" value="post" />
-      <input type="hidden" name="diyid" value="1" />
-      <input type="hidden" name="do" value="2" />
+    <el-form class="bd" label-position="right">
       <el-form-item label="">
         <el-input name="name" id="name" v-model="name" placeholder="请输入您的姓名"></el-input>
       </el-form-item>
       <el-form-item label="">
-        <el-input name="tel" id="tel" type="number" v-model="tel" minlength="7" placeholder="请输入您的电话号码"></el-input>
+        <el-input id="tj_tel" type="number" v-model="tel" minlength="7" placeholder="请输入您的电话号码"></el-input>
       </el-form-item>
       <p class="bd-keshi">膏方门诊</p>
       <input type="hidden" name="keshi" id="keshi" value="膏方门诊" />
@@ -71,33 +66,28 @@
       </el-form-item>
 
       <input type="hidden" name="doctor" id="doctor" v-model="zjName" />
-      <input type="hidden" name="url" id="url" v-model="document.location.href" />
-      <input type="hidden" name="tag" id="tag" v-model="tag" />
-      <input type="hidden" name="now" id="now" v-model="new Date().toLocaleString()" />
-      <input type="hidden" name="dede_fields"
-        value="name,text;tel,text;time,text;doctor,text;url,text;keshi,text;now,text;tag,text" />
-      <input type="hidden" name="dede_fieldshash" value="6883269033b7572c3507fbde22ab90b5" />
       <p class="bd-p">
         <span class="bd-p-1"><img src="/gh/images/d3.png" alt="">出诊地点：苏州同济医院</span>
         <span><img class="bd-p-2" src="/gh/images/lock.png" alt="" />隐私保护</span>
       </p>
       <el-row type="flex" justify="space-around">
-        <input type="submit" value="提交挂号" class="submit-form" onclick="return submitForm()" />
+        <input type="button" value="提交挂号" class="submit-form" @click="submitForm()" />
       </el-row>
 	 
     </el-form>
 
-  </div>
-  <div class="bottom">
-    <a class="home" href="/gh/list_xcx.html">
-      <img src="/gh/images/home.png" alt=""> 首 页</a>
-    <a class="tx" href="/gh/list_xcx.html">
-      <img src="/gh/images/tx.png" alt=""> 特需专家号</a>
-    <a class="pt" href="/gh/list.html">
-      <img src="/gh/images/pt.png" alt=""> 专科专诊号</a>
+	  <div class="bottom">
+		<a class="home" href="/gh/list_xcx.html">
+		  <img src="/gh/images/home.png" alt=""> 首 页</a>
+		<a class="tx" href="/gh/list_xcx.html">
+		  <img src="/gh/images/tx.png" alt=""> 特需专家号</a>
+		<a class="pt" href="/gh/list.html">
+		  <img src="/gh/images/pt.png" alt=""> 专科专诊号</a>
+	  </div>
   </div>
   <!-- 专家列表 -->
   <script src="zj.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/ghApi.js"></script>
 
   <script>
     var app = new Vue({
@@ -107,16 +97,16 @@
         zj: 'zyk',
 		zjName:'',
 		zjTime: {},
-        name: '', //姓名
-        tel: '', //电话
-        time: '', //预约日期
+        name: '',        //姓名
+        tel: '',         //电话
+        time: '',        //预约日期
         url: document.location.href,
         currentIndex: 0, //选中的日期
         content: {},
         contentShow: '', // 真实显示的内容
-        cLength: 0, //学术内容长度
-        maxLength: 86, // 收起时最大显示文字长度
-        ellipsis: true, // 是否收缩
+        cLength: 0,      // 学术内容长度
+        maxLength: 86,   // 收起时最大显示文字长度
+        ellipsis: true,  // 是否收缩
         tag: ''    //小程序标签
       },
       mounted: function () {
@@ -187,31 +177,62 @@
           this.contentShow = contentShow
           this.ellipsis = ellipsis
 
+        },
+        alertMsg: function (msg) {
+          this.$message({
+            message: msg,
+            type: 'warning',
+            showClose: true,
+            offset: 180
+          });
+        },
+        submitForm: function () {
+          //姓名
+          var uname = this.name
+          if (uname == '') {
+            $('#tj_name').focus()
+            this.alertMsg('请输入您的姓名!')
+            return false
+          }
+          //预约手机
+          var uphone = this.tel
+          if (uphone != '') {
+            if (/^1[3456789]\d{9}$/.test(uphone) == false) {
+              this.alertMsg('请输入您的正确联系方式！')
+              return false
+            }
+          } else {
+            $('#tj_tel').focus()
+            this.alertMsg('请输入联系方式！')
+            return false
+          }
+          //预约时间
+          var yyday = new Date().getFullYear() + '-' + this.time
+          if (yyday == '') {
+            this.alertMsg('请选择预约时间！')
+            return false
+          }
+          var myData = {
+            uname: uname, uphone: uphone, yyday: yyday,
+            yyks: '膏方门诊',
+            yyys: this.zjName
+          }
+          var that = this;
+          //console.log(myData);
+          $.ajaxGuahao(myData,
+            function (data) {//成功
+              console.log(data)
+              that.$message({ message: '提示：预约信息提交成功！咨询员会尽快为您服务！', type: 'success' });
+              window.location.href = "https://xcx.sztjyy.cn/wx/index_xsmz.html"
+            }, function (data) {//失败
+              console.log(data)
+              that.$message({ message: '提示：预约信息提交失败！请联系客服！', type: 'warning' });
+            })
+          return true;
         }
       },
     })
-    function submitForm() {
-      if ($('#name').val() == '') {
-        $('#name').focus()
-        alert('*请输入您的姓名！')
-        return false
-      }
-
-      if ($('#tel').val() != '') {
-        if (/^1[3456789]\d{9}$/.test($('#tel').val()) == false) {
-          alert('*请输入您的正确联系方式！')
-          return false
-        }
-      } else {
-        $('#tel').focus()
-        alert('*请输入联系方式！')
-        return false
-      }
-      if ($('#time').val() == '') {
-        alert('*请选择预约时间！')
-        return false
-      }
-    }
+   
   </script>
 </body>
 

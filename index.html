@@ -9,57 +9,49 @@
   <meta content="telephone=no" name="format-detection" />
 
   <title>苏州同济医院_同济官网在线预约</title>
-  <link href="layout.css" rel="stylesheet" type="text/css" />
-  <script src="js/jquery.min.js"></script>
-  <script src="js/vue@2.6.11.js"></script>
-  <script src="js/rem.js"></script>
-  <link rel="stylesheet" href="js/element-ui.css" />
-  <script src="js/element-ui.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/vue@2.6.11.js"></script>
+  <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet"/>
+  <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
+  <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
 </head>
 
 <body>
   <div id="app">
     <header>
-      <img src="./images/logo_xcx.jpg" alt="" />
-      <img src="./images/ptmz_02.jpg" alt="" />
+      <img src="https://xcx.sztjyy.cn/gh/images/logo_xcx.jpg" alt="" />
+      <img src="https://xcx.sztjyy.cn/gh/images/ptmz_02.jpg" alt="" />
     </header>
     <h5 class="title">苏州同济医院预约挂号中心</h5>
-    <el-form class="bd" label-position="right" id="gh_form" action="/plus/diy.php" enctype="multipart/form-data"
-      method="post">
-      <input type="hidden" name="action" value="post" />
-      <input type="hidden" name="diyid" value="1" />
-      <input type="hidden" name="do" value="2" />
+    <el-form class="bd" label-position="right">
       <el-form-item label="">
-        <el-input name="name" id="name" v-model="name" placeholder="请输入您的姓名"></el-input>
+        <el-input  id="tj_name" v-model="name" placeholder="请输入您的姓名"></el-input>
       </el-form-item>
       <el-form-item label="">
-        <el-input name="tel" id="tel" type="number" v-model="tel" minlength="7" placeholder="请输入您的电话号码"></el-input>
+        <el-input id="tj_tel" type="number" v-model="tel" minlength="7" placeholder="请输入您的电话号码"></el-input>
       </el-form-item>
       <el-form-item label="">
-        <el-input name="keshi" id="keshi" v-model="keshi" readonly></el-input>
+        <el-input id="tj_keshi"  v-model="keshi" readonly></el-input>
       </el-form-item>
       <el-form-item label="">
-        <el-input name="time" id="time" readonly placeholder="请选择预约日期" suffix-icon="el-icon-date" v-model="uday"
+        <el-input id="tj_time" readonly placeholder="请选择预约日期" suffix-icon="el-icon-date" v-model="uday"
           @focus="dialogVisible = true">
         </el-input>
       </el-form-item>
-      <input type="hidden" name="url" id="url" v-model="document.location.href" />
+      
       <input type="hidden" name="tag" id="tag" v-model="tag" />
-      <input type="hidden" name="now" id="now" v-model="new Date().toLocaleString()" />
-      <input type="hidden" name="dede_fields"
-        value="name,text;tel,text;time,text;doctor,text;url,text;keshi,text;now,text;tag,text" />
-      <input type="hidden" name="dede_fieldshash" value="6883269033b7572c3507fbde22ab90b5" />
-      <p class="bd-p"><img src="./images/lock.png" alt="" /> 隐私保护</p>
+      <p class="bd-p"><img src="https://xcx.sztjyy.cn/gh/images/lock.png" alt="" /> 隐私保护</p>
       <el-row type="flex" justify="space-between">
         <a class="submit-back" href="/gh/list.html">返回上页</a>
-        <input type="submit" value="提交挂号" class="submit-form submit-form-width" onclick="return submitForm()" />
+        <input type="button" value="提交挂号" class="submit-form submit-form-width" @click="submitForm()" />
       </el-row>
     </el-form>
     <p class="tips">
       <strong>*温馨提示</strong><br />
       通过网络就诊的患者请留下正确的联系方式，客服人员会及时与您联系！
     </p>
-    <img class="allied" src="./images/dw.png" alt="" />
+    <img class="allied" src="https://xcx.sztjyy.cn/gh/images/dw.png" alt="" />
     <el-dialog title="选择预约日期" :visible.sync="dialogVisible">
       <el-calendar>
         <template slot="dateCell" slot-scope="{date, data}">
@@ -83,6 +75,7 @@
         <img src="./images/pt.png" alt=""> 专科专诊号</a>
     </div>
   </div>
+  <script src="https://xcx.sztjyy.cn/gh/js/ghApi.js"></script>
   <script>
     var app = new Vue({
       el: '#app',
@@ -130,31 +123,60 @@
           this.uday = day
           this.dialogVisible = false
         },
+        alertMsg(msg) {
+          this.$message({
+            message: msg,
+            type: 'warning',
+            showClose: true,
+            offset: 180
+          });
+        },
+        submitForm() {
+          //姓名
+          var uname = this.name
+          if (uname == '') {
+            $('#tj_name').focus()
+            this.alertMsg('请输入您的姓名!')
+            return false
+          }
+          //预约手机
+          var uphone = this.tel
+          if (uphone != '') {
+            if (/^1[3456789]\d{9}$/.test(uphone) == false) {
+              this.alertMsg('请输入您的正确联系方式！')
+              return false
+            }
+          } else {
+            $('#tj_tel').focus()
+            this.alertMsg('请输入联系方式！')
+            return false
+          }
+          //预约时间
+          var yyday = this.uday
+          if (yyday == '') {
+            this.alertMsg('请选择预约时间！')
+            return false
+          }
+          var myData = {
+            uname: uname, uphone: uphone, yyday: yyday,
+            yyks: this.keshi,
+            yyys: ''
+          }
+          var that = this;
+          $.ajaxGuahao(myData,
+            function (data) {//成功
+              console.log(data)
+              that.$message({ message: '提示：预约信息提交成功！咨询员会尽快为您服务！', type: 'success' });
+              window.location.href = "https://xcx.sztjyy.cn/wx/index.html"
+            }, function (data) {//失败
+              console.log(data)
+              that.$message({ message: '提示：预约信息提交失败！请联系客服！', type: 'warning' });
+            })
+          return true;
+        }
       },
     })
 
-    function submitForm() {
-      if ($('#name').val() == '') {
-        $('#name').focus()
-        alert('*请输入您的姓名！')
-        return false
-      }
-
-      if ($('#tel').val() != '') {
-        if (/^1[3456789]\d{9}$/.test($('#tel').val()) == false) {
-          alert('*请输入您的正确联系方式！')
-          return false
-        }
-      } else {
-        $('#tel').focus()
-        alert('*请输入联系方式！')
-        return false
-      }
-      if ($('#time').val() == '') {
-        alert('*请选择预约时间！')
-        return false
-      }
-    }
   </script>
 </body>
 
