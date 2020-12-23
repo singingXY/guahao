@@ -9,16 +9,19 @@
   <meta content="telephone=no" name="format-detection" />
 
   <title>苏州同济医院_同济官网在线预约</title>
-  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
   <script src="https://xcx.sztjyy.cn/gh/js/vue@2.6.11.js"></script>
   <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet" />
   <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
   <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
-  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
 </head>
 
 <body>
-  <div id="app">
+  <style>
+    [v-cloak] {
+      display: none
+    }
+  </style>
+  <div id="app" v-cloak>
     <div class="zjban">
       <el-image :src="'https://xcx.sztjyy.cn/gh/zjimg/' + this.zj + '.jpg'" :onerror="defaultImg"></el-image>
     </div>
@@ -47,7 +50,7 @@
         </el-input>
       </el-form-item>
       <input type="hidden" name="doctor" id="doctor" v-model="this.yyzj" />
-      
+
       <input type="hidden" name="tag" id="tag" v-model="tag" />
       <p class="bd-p"><img src="https://xcx.sztjyy.cn/gh/images/lock.png" alt="" /> 隐私保护</p>
       <el-row type="flex" justify="space-between">
@@ -84,7 +87,10 @@
         <img src="./images/pt.png" alt=""> 专科专诊号</a>
     </div>
   </div>
-  <script src="js/zj.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
+  <!-- 专家列表 -->
+  <script src="https://xcx.sztjyy.cn/gh/js/zj2.js"></script>
   <script src="https://xcx.sztjyy.cn/gh/js/ghApi.js"></script>
   <script>
     var app = new Vue({

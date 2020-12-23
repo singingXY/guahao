@@ -9,21 +9,23 @@
   <meta content="telephone=no" name="format-detection" />
 
   <title>苏州同济医院_同济官网在线预约</title>
-  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
   <script src="https://xcx.sztjyy.cn/gh/js/vue@2.6.11.js"></script>
   <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet" />
   <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
   <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
-  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
 </head>
 
 <body>
   <style>
+    [v-cloak] {
+      display: none;
+    }
+
     .detailed {
       display: none;
     }
   </style>
-  <div id="app">
+  <div id="app" v-cloak>
     <div class="zjban">
       <el-image :src="'https://xcx.sztjyy.cn/gh/zjimg/' + this.zj + '.jpg'" :onerror="defaultImg"></el-image>
     </div>
@@ -90,9 +92,11 @@
     <a class="pt" href="/gh/list.html">
       <img src="./images/pt.png" alt=""> 专科专诊号</a>
   </div>
+  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
+  <script src="js/rem.js"></script>
   <!-- 专家列表 -->
-  <script src="https://xcx.sztjyy.cn/gh/js/zjList.js?time=20201130"></script>
   <script src="https://xcx.sztjyy.cn/gh/js/zj.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/zjList.js?time=20201223"></script>
   <script src="https://xcx.sztjyy.cn/gh/js/ghApi.js"></script>
 
   <script>
@@ -112,7 +116,7 @@
         cLength: 0, //学术内容长度
         maxLength: 86, // 收起时最大显示文字长度
         ellipsis: true, // 是否收缩
-        tag: ''    //小程序标签
+        tag: '',   //小程序标签
       },
       mounted: function () {
         var url = window.location.href
@@ -163,7 +167,7 @@
           }
         },
         weekDay: function (day) {
-          var weekDay =  ['周日','周一','周二','周三','周四','周五','周六']
+          var weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
           var myDate = new Date(Date.parse(day.replace(/-/g, '/')))
           return weekDay[myDate.getDay()]
         },
@@ -258,7 +262,6 @@
         }
       },
     })
-   
   </script>
 </body>
 
