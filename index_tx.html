@@ -51,7 +51,8 @@
       <input v-if="zjList[this.zj]" type="hidden" id="tj_keshi" :value="zjList[this.zj][1]" />
       <ul class="visit-date">
         <template v-for="(date,index) in zzTime">
-          <li v-if="currentDate(date)" @click="changeIndex(index,date)" :class="{active:currentIndex===index}">
+          <li v-if="currentDate(date,apm(weekDay(date)))" @click="changeIndex(index,date)"
+            :class="{active:currentIndex===index}">
             {{ toDay(date)}}<br />
             {{ weekDay(date) }} {{apm(weekDay(date))}}
           </li>
@@ -61,6 +62,13 @@
           </li>
         </template>
       </ul>
+      <template v-for="(date,index) in zzTime">
+        <p v-if="currentIndex===index">
+          挂号日期：<span v-if="time == ''" style="color: #aaa;">请点击选择挂号日期</span>
+          <span v-else>{{time}}</span>
+        </p>
+      </template>
+
       <el-form-item label="" style="display: none;">
         <el-input id="time" readonly placeholder="请选择预约日期" suffix-icon="el-icon-date" v-model="time"
           @focus="dialogVisible = true">
@@ -138,6 +146,15 @@
         //默认选中第一个日期
         // var day = zjList[this.zj][2].split(';')
         // this.time = day[0]
+
+        //无可挂日期时提醒
+        var zzTime = this.zzTime;
+        var _this = this;
+        var noOption = zzTime.some(function (val) { return _this.currentDate(val) })
+        if (zzTime == "" || !noOption) {
+          this.alertMsg('当前专家已无可挂号日期，请选择其他专家！')
+        }
+
         var maxLength = this.maxLength;
         for (var j = 0; j < profile.length; j++) {
           if (profile[j].pinyin == cs.zj) {
@@ -159,12 +176,18 @@
         }
       },
       methods: {
-        currentDate: function (date) {
-          var myDate = new Date(date);
+        currentDate: function (date, apm) {
           var today = new Date();
+          var myDate = new Date(date)
+          //上午时间分割至11点
+          if (apm == '上午') {
+            myDate = myDate.setHours(11);
+          } else {
+            myDate = myDate.setHours(17);
+          }
           if (myDate > today) {
             return true
-          }
+          } else { return false }
         },
         weekDay: function (day) {
           var weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
