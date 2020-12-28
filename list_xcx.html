@@ -107,8 +107,8 @@
   <header>
     <img class="headpic1" src="./images/logo_xcx.jpg" alt="" />
     <img class="headpic2" src="./images/ban.jpg" alt="" />
-   <!--  <img class="qr" src="./images/qr.png" alt="" /> -->
-   <a href="/gh/zt/1018gf/?tag=banner"> <img src="/gh/zt/1018gf/gf.jpg" alt="" /></a>
+    <!--  <img class="qr" src="./images/qr.png" alt="" /> -->
+    <a href="/gh/zt/1018gf/?tag=banner"> <img src="/gh/zt/1018gf/gf.jpg" alt="" /></a>
   </header>
 
   <table class="artnav">
@@ -138,7 +138,7 @@
     <a class="pt" href="/gh/list.html">
       <img src="./images/pt.png" alt=""> 专科专诊号</a>
   </div>
-  <script src="js/zjList.js?date=20201210"></script>
+  <script src="js/zjList.js?date=20201227"></script>
   <script>
     var tag = ''
     var url = window.location.href
@@ -174,28 +174,30 @@
         + dpm[i] + '">' + department[i]
         + '</a></td><td>上午</td>' + week() + '</tr>'
         + '<tr class="odd" id="pm_' + i + '"><td>下午</td>' + week() + '</tr>'
-		  if(dpm[i] == 'zyk'){
-		  //膏方门诊
-			  var tableC =
-				'<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/zt/1018gf/?tag=' + cs.tag + '&ks='
-				+ dpm[i] + '">中医科<br>（膏方门诊）</a></td><td>上午</td>' + week() + '</tr>'
-				+ '<tr class="odd" id="pm_' + i + '"><td>下午</td>' + week() + '</tr>'
-		  }
+      if (dpm[i] == 'zyk') {
+        //膏方门诊
+        var tableC =
+          '<tr id="am_' + i + '"><td rowspan="2"><a href="/gh/zt/1018gf/?tag=' + cs.tag + '&ks='
+          + dpm[i] + '">中医科<br>（膏方门诊）</a></td><td>上午</td>' + week() + '</tr>'
+          + '<tr class="odd" id="pm_' + i + '"><td>下午</td>' + week() + '</tr>'
+      }
       $('#myTable').append(tableC)
       var zjLists;
       for (zjLists in zjList) {
         var zjs = zjList[zjLists]
         //如果存在排班且科室相符
-		var zjDepart = zjs[1]
-		var departTure = zjs[4] && department[i] == zjDepart
-		var departTure2 = false; 
-		//存在多个科室
-		var moreDepart =  zjs[1].split(';')
-		if(moreDepart.length > 1){
-		  departTure = zjs[4] && department[i] == moreDepart[0]
-		  var departTure2 = zjs[4] && department[i] == moreDepart[1]
-		}
-        if (departTure || departTure2) {
+        var zjDepart = zjs[1]
+        var departTure = zjs[4] && department[i] == zjDepart
+        var departTure2 = false;
+        var departTure3 = false;
+        //存在多个科室
+        var moreDepart = zjs[1].split(';')
+        if (moreDepart.length > 1) {
+          departTure = zjs[4] && department[i] == moreDepart[0]
+          var departTure2 = zjs[4] && department[i] == moreDepart[1]
+          var departTure3 = zjs[4] && department[i] == moreDepart[2]
+        }
+        if (departTure || departTure2 || departTure3) {
           var textHtml = '<a href="/gh/index_tx.html?tag=' + cs.tag + '&zj=' + zjLists + '">' +
             zjs[0] + '<br><span>' + zjs[5] + '</span></a>'
           var hDay = zjs[3]
@@ -208,7 +210,7 @@
               for (var d = 0; d < zDays.length; d++) {
                 zjWeek = parseInt(zDays[d])
                 if (hDay.split('/').length > 1) {
-				  //王少峰专用
+                  //王少峰专用
                   if (d == 0) {
                     isAPm(hDay, NumA[zjWeek + 1], '上午', textHtml)
                     isAPm(hDay, NumB[zjWeek], '下午', textHtml)
