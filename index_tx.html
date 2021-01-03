@@ -10,7 +10,7 @@
 
   <title>苏州同济医院_同济官网在线预约</title>
   <script src="https://xcx.sztjyy.cn/gh/js/vue@2.6.11.js"></script>
-  <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://xcx.sztjyy.cn/gh/js/element-ui.css" />
   <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
   <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
 </head>
@@ -50,15 +50,15 @@
       </p>
       <input v-if="zjList[this.zj]" type="hidden" id="tj_keshi" :value="zjList[this.zj][1]" />
       <ul class="visit-date">
-        <template v-for="(date,index) in zzTime">
-          <li v-if="currentDate(date,apm(weekDay(date)))" @click="changeIndex(index,date)"
+        <template v-for="(item,index) in zzTime">
+          <li v-if="currentDate(item[0],item[1])" @click="changeIndex(index,item[0])"
             :class="{active:currentIndex===index}">
-            {{ toDay(date)}}<br />
-            {{ weekDay(date) }} {{apm(weekDay(date))}}
+            {{ toDay(item[0])}}<br />
+            {{ weekDay(item[0]) }} {{item[1]}}
           </li>
           <li v-else style="background-color: #dcdcdc;">
-            {{ toDay(date)}}<br />
-            {{ weekDay(date) }} {{apm(weekDay(date))}}
+            {{ toDay(item[0])}}<br />
+            {{ weekDay(item[0]) }} {{item[1]}}
           </li>
         </template>
       </ul>
@@ -68,7 +68,6 @@
           <span v-else>{{time}}</span>
         </p>
       </template>
-
       <el-form-item label="" style="display: none;">
         <el-input id="time" readonly placeholder="请选择预约日期" suffix-icon="el-icon-date" v-model="time"
           @focus="dialogVisible = true">
@@ -101,10 +100,10 @@
       <img src="./images/pt.png" alt=""> 专科专诊号</a>
   </div>
   <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
-  <script src="js/rem.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
   <!-- 专家列表 -->
   <script src="https://xcx.sztjyy.cn/gh/js/zj.js"></script>
-  <script src="https://xcx.sztjyy.cn/gh/js/zjList.js?time=20201223"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/zjList.js"></script>
   <script src="https://xcx.sztjyy.cn/gh/js/ghApi.js"></script>
 
   <script>
@@ -113,18 +112,19 @@
       data: {
         defaultImg: 'this.src="img/default.jpg"', //默认图
         zj: 'default',
-        zjList: zjList, //医生列表
-        name: '', //姓名
-        tel: '', //电话
-        time: '', //预约日期
+        zjList: zjList,  //医生列表
+        name: '',        //姓名
+        tel: '',         //电话
+        time: '',        //预约日期
         url: document.location.href,
         currentIndex: 0, //选中的日期
         content: {},
         contentShow: '', // 真实显示的内容
-        cLength: 0, //学术内容长度
-        maxLength: 86, // 收起时最大显示文字长度
-        ellipsis: true, // 是否收缩
+        cLength: 0,      // 学术内容长度
+        maxLength: 86,   // 收起时最大显示文字长度
+        ellipsis: true,  // 是否收缩
         tag: '',   //小程序标签
+        zzTime: []  //专家出诊时间
       },
       mounted: function () {
         var url = window.location.href
@@ -143,17 +143,6 @@
           $('.pt').attr("href", "/gh/list.html?tag=" + cs.tag)
           $('.tx').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
         } else { cs = {} }
-        //默认选中第一个日期
-        // var day = zjList[this.zj][2].split(';')
-        // this.time = day[0]
-
-        //无可挂日期时提醒
-        var zzTime = this.zzTime;
-        var _this = this;
-        var noOption = zzTime.some(function (val) { return _this.currentDate(val) })
-        if (zzTime == "" || !noOption) {
-          this.alertMsg('当前专家已无可挂号日期，请选择其他专家！')
-        }
 
         var maxLength = this.maxLength;
         for (var j = 0; j < profile.length; j++) {
@@ -163,22 +152,66 @@
             this.content = profile[j]
             this.contentShow = contentShow
             this.cLength = this.content.profile.length
+
+            if (!profile[j].id) {
+              this.alertMsg('当前专家已无可挂号日期，请选择其他专家！')
+            } else {
+              this.getAMonth(profile[j].id)
+            }
           }
         }
         $('.detailed ').show()
       },
-      computed: {
-        zzTime: function () {
-          var time = zjList[this.zj]
-          if (time) {
-            return time[2].split(';')
-          }
-        }
-      },
       methods: {
+        getAMonth: function (docID) {
+          var _this = this
+          var d = new Date();
+          var todayDate = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+          d.setMonth(d.getMonth() + 1)
+          var nextMonth = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+
+          $.ajax({
+            url: "https://xcx.sztjyy.cn/api/php/index.php/Apiinfo/Tjyy/getDoctorWorkInfoOne/doctor_id/" + docID + "/start/" + todayDate + "/end/" + nextMonth,
+            success: function (res) {
+              var data = JSON.parse(res)
+              if (!data) {
+                _this.alertMsg('获取专家信息失败！')
+              } else {
+                for (var i = 0; i < 30; i++) {
+                  var day = new Date(new Date()
+                    .setDate(new Date().getDate() + i))
+                  var aM = day.getMonth() + 1
+                  aM < 10 ? aM = "0" + aM : aM;
+                  var aD = day.getDate()
+                  aD < 10 ? aD = "0" + aD : aD;
+                  var aDate = day.getFullYear() + "-" + aM + "-" + aD
+
+                  //有排班的日期传入zzTime
+                  if (data[aDate]) {
+                    _this.zzTime.push([aDate, data[aDate]])
+                  }
+                }
+                //无可挂日期时提醒
+                if (_this.zzTime == "") {
+                  _this.alertMsg('当前专家已无可挂号日期，请选择其他专家！')
+                } else {
+                  //默认选中第一个日期
+                  if (_this.currentDate(_this.zzTime[0][0], _this.zzTime[0][1])) {
+                    _this.time = _this.zzTime[0][0]
+                  } else {
+                    _this.currentIndex = 1
+                    _this.time = _this.zzTime[1][0]
+                  }
+                }
+              }
+            }
+          })
+        },
+        //对比当前时间是否超过日期
         currentDate: function (date, apm) {
           var today = new Date();
-          var myDate = new Date(date)
+          var time = date.split("-");
+          var myDate = new Date(time[0], time[1] - 1, time[2]);
           //上午时间分割至11点
           if (apm == '上午') {
             myDate = myDate.setHours(11);
@@ -213,24 +246,6 @@
           this.contentShow = contentShow
           this.ellipsis = ellipsis
 
-        },
-        apm: function (date) {
-          var ampm = zjList[this.zj][3].split('/')
-          if (ampm.length > 1) {
-            //王少峰专用
-            if (date == '周二') {
-              //return ampm[0]
-              return '全天'
-            } else {
-              return ampm[1]
-            }
-          } else {
-            if (zjList[this.zj][3] == '上午下午') {
-              return '全天'
-            } else {
-              return zjList[this.zj][3]
-            }
-          }
         },
         alertMsg: function (msg) {
           this.$message({

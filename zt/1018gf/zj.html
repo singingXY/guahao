@@ -9,23 +9,40 @@
   <meta content="telephone=no" name="format-detection" />
 
   <title>苏州同济医院_同济官网在线预约</title>
-  <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet" />
-  <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
   <script src="https://xcx.sztjyy.cn/gh/js/vue@2.6.11.js"></script>
+  <link rel="stylesheet" href="https://xcx.sztjyy.cn/gh/js/element-ui.css" />
   <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
-  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
-  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
+  <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
   <style>
-    .detailed {display: none;background: #faf9f5;}
-	.detailed .more {background-image: linear-gradient( to right, rgba(250, 249, 245, 0), rgba(250, 249, 245, 0.8), rgb(250, 249, 245) );}
-	.visit-date .active {background: #865c31;}
-	.bottom .tx {background: #865c31;}
-    .el-message {min-width: 60%;}
+    [v-cloak] {
+      display: none;
+    }
+
+    .detailed {
+      display: none;
+      background: #faf9f5;
+    }
+
+    .detailed .more {
+      background-image: linear-gradient(to right, rgba(250, 249, 245, 0), rgba(250, 249, 245, 0.8), rgb(250, 249, 245));
+    }
+
+    .visit-date .active {
+      background: #865c31;
+    }
+
+    .bottom .tx {
+      background: #865c31;
+    }
+
+    .el-message {
+      min-width: 60%;
+    }
   </style>
-  <div id="app">
+  <div id="app" v-cloak>
     <div class="zjban">
       <el-image :src="'zjimg/' + this.zj + '.jpg'" :onerror="defaultImg"></el-image>
     </div>
@@ -48,17 +65,24 @@
       <p class="bd-keshi">膏方门诊</p>
       <input type="hidden" name="keshi" id="keshi" value="膏方门诊" />
       <ul class="visit-date">
-        <template v-for="(date,index) in zjTime">
-          <li v-if="currentDate(date.day)" @click="changeIndex(index,date.day)" :class="{active:currentIndex===index}">
-            {{ toDay(date.day)}}<br />
-            {{ weekDay(date.day) }} {{ date.slot}}
+        <template v-for="(item,index) in zzTime">
+          <li v-if="currentDate(item[0],item[1])" @click="changeIndex(index,item[0])"
+            :class="{active:currentIndex===index}">
+            {{ toDay(item[0])}}<br />
+            {{ weekDay(item[0]) }} {{item[1]}}
           </li>
           <li v-else style="background-color: #dcdcdc;">
-            {{ toDay(date.day)}}<br />
-            {{ weekDay(date.day) }} {{ date.slot}}
+            {{ toDay(item[0])}}<br />
+            {{ weekDay(item[0]) }} {{item[1]}}
           </li>
         </template>
       </ul>
+      <template v-for="(date,index) in zzTime">
+        <p v-if="currentIndex===index">
+          挂号日期：<span v-if="time == ''" style="color: #aaa;">请点击选择挂号日期</span>
+          <span v-else>{{time}}</span>
+        </p>
+      </template>
       <el-form-item label="" style="display: none;">
         <el-input name="time" id="time" readonly placeholder="请选择预约日期" suffix-icon="el-icon-date" v-model="time"
           @focus="dialogVisible = true">
@@ -67,26 +91,27 @@
 
       <input type="hidden" name="doctor" id="doctor" v-model="zjName" />
       <p class="bd-p">
-        <span class="bd-p-1"><img src="/gh/images/d3.png" alt="">出诊地点：苏州同济医院</span>
-        <span><img class="bd-p-2" src="/gh/images/lock.png" alt="" />隐私保护</span>
+        <span class="bd-p-1"><img src="https://xcx.sztjyy.cn/gh/images/d3.png" alt="">出诊地点：苏州同济医院</span>
+        <span><img class="bd-p-2" src="https://xcx.sztjyy.cn/gh/images/lock.png" alt="" />隐私保护</span>
       </p>
       <el-row type="flex" justify="space-around">
         <input type="button" value="提交挂号" class="submit-form" @click="submitForm()" />
       </el-row>
-	 
     </el-form>
 
-	  <div class="bottom">
-		<a class="home" href="/gh/list_xcx.html">
-		  <img src="/gh/images/home.png" alt=""> 首 页</a>
-		<a class="tx" href="/gh/list_xcx.html">
-		  <img src="/gh/images/tx.png" alt=""> 特需专家号</a>
-		<a class="pt" href="/gh/list.html">
-		  <img src="/gh/images/pt.png" alt=""> 专科专诊号</a>
-	  </div>
+    <div class="bottom">
+      <a class="home" href="/gh/list_xcx.html">
+        <img src="https://xcx.sztjyy.cn/gh/images/home.png" alt=""> 首 页</a>
+      <a class="tx" href="/gh/list_xcx.html">
+        <img src="https://xcx.sztjyy.cn/gh/images/tx.png" alt=""> 特需专家号</a>
+      <a class="pt" href="/gh/list.html">
+        <img src="https://xcx.sztjyy.cn/gh/images/pt.png" alt=""> 专科专诊号</a>
+    </div>
   </div>
+  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
   <!-- 专家列表 -->
-  <script src="zj.js"></script>
+  <script src="zj.js?time=0103"></script>
   <script src="https://xcx.sztjyy.cn/gh/js/ghApi.js"></script>
 
   <script>
@@ -95,8 +120,7 @@
       data: {
         defaultImg: 'this.src="zyk.jpg"', //默认图
         zj: 'zyk',
-		zjName:'',
-		zjTime: {},
+        zjName: '',
         name: '',        //姓名
         tel: '',         //电话
         time: '',        //预约日期
@@ -107,7 +131,8 @@
         cLength: 0,      // 学术内容长度
         maxLength: 86,   // 收起时最大显示文字长度
         ellipsis: true,  // 是否收缩
-        tag: ''    //小程序标签
+        tag: '',    //小程序标签
+        zzTime: []  //专家出诊时间
       },
       mounted: function () {
         var url = window.location.href
@@ -130,38 +155,101 @@
         var maxLength = this.maxLength;
         for (var j = 0; j < profile.length; j++) {
           if (profile[j].pinyin == cs.zj) {
-			this.zjName = profile[j].name
+            this.zjName = profile[j].name
             var contentShow = profile[j].profile;
             contentShow = (contentShow.length > maxLength && this.ellipsis) ? contentShow.substring(0, maxLength - 3) : contentShow;
             this.content = profile[j]
             this.contentShow = contentShow
             this.cLength = this.content.profile.length
-			this.zjTime = profile[j].time
+
+            if (!profile[j].id) {
+              var time = profile[j].time
+              //没有id的，使用zj.js里time的时间
+              if (time && time.length > 0) {
+                for (var t = 0; t < time.length; t++) {
+                  this.zzTime.push([time[t].day, time[t].slot])
+                }
+              } else {
+                this.alertMsg('当前专家已无可挂号日期，请选择其他专家！')
+              }
+            } else {
+              this.getAMonth(profile[j].id)
+            }
           }
         }
+        if (!this.zjName) {
+          this.alertMsg('获取专家信息失败！')
+        }
         $('.detailed ').show()
-		
-		
       },
       methods: {
-        currentDate: function (date) {
+        getAMonth: function (docID) {
+          var _this = this
+          var d = new Date();
+          var todayDate = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+          d.setMonth(d.getMonth() + 1)
+          var nextMonth = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+          $.ajax({
+            url: "https://xcx.sztjyy.cn/api/php/index.php/Apiinfo/Tjyy/getDoctorWorkInfoOne/doctor_id/" + docID + "/start/" + todayDate + "/end/" + nextMonth,
+            success: function (res) {
+              var data = JSON.parse(res)
+              if (!data) {
+                _this.alertMsg('获取专家信息失败！')
+              } else {
+                for (var i = 0; i < 30; i++) {
+                  var day = new Date(new Date()
+                    .setDate(new Date().getDate() + i))
+                  var aM = day.getMonth() + 1
+                  aM < 10 ? aM = "0" + aM : aM;
+                  var aD = day.getDate()
+                  aD < 10 ? aD = "0" + aD : aD;
+                  var aDate = day.getFullYear() + "-" + aM + "-" + aD
+
+                  //有排班的日期传入zzTime
+                  if (data[aDate]) {
+                    _this.zzTime.push([aDate, data[aDate]])
+                  }
+                }
+                //无可挂日期时提醒
+                if (_this.zzTime == "") {
+                  _this.alertMsg('当前专家已无可挂号日期，请选择其他专家！')
+                } else {
+                  //默认选中第一个日期
+                  if (_this.currentDate(_this.zzTime[0][0], _this.zzTime[0][1])) {
+                    _this.time = _this.zzTime[0][0]
+                  } else {
+                    _this.currentIndex = 1
+                    _this.time = _this.zzTime[1][0]
+                  }
+                }
+              }
+            }
+          })
+        },
+        //对比当前时间是否超过日期
+        currentDate: function (date, apm) {
           var today = new Date();
-		  var day = today.getFullYear() + '-' + date
-          var myDate = new Date(day.replace(/-/g, '/'));
+          var time = date.split("-");
+          var myDate = new Date(time[0], time[1] - 1, time[2]);
+          //上午时间分割至11点
+          if (apm == '上午') {
+            myDate = myDate.setHours(11);
+          } else {
+            myDate = myDate.setHours(17);
+          }
           if (myDate > today) {
             return true
-          }
+          } else { return false }
         },
         weekDay: function (day) {
-          var weekDay = ['周日','周一','周二','周三','周四','周五','周六']
-		  var date = new Date().getFullYear() + '-' + day
-          var myDate = new Date(date.replace(/-/g, '/'))
+          var weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+          var myDate = new Date(Date.parse(day.replace(/-/g, '/')))
           return weekDay[myDate.getDay()]
         },
         toDay: function (day) {
           if (day) {
             var dateArr = day.split('-')
-            return dateArr[0] + '月' + dateArr[1] + '日'
+            return dateArr[1] + '月' + dateArr[2] + '日'
           }
         },
         changeIndex: function (index, date) {
@@ -207,7 +295,7 @@
             return false
           }
           //预约时间
-          var yyday = new Date().getFullYear() + '-' + this.time
+          var yyday = this.time
           if (yyday == '') {
             this.alertMsg('请选择预约时间！')
             return false
@@ -232,7 +320,6 @@
         }
       },
     })
-   
   </script>
 </body>
 
