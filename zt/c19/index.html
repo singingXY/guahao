@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="telephone=no" name="format-detection" />
+
+  <title>苏州同济医院_同济官网在线预约</title>
+  <script src="https://xcx.sztjyy.cn/gh/js/vue@2.6.11.js"></script>
+  <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet" />
+  <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
+  <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <style>
+    [v-cloak] {
+      display: none
+    }
+  </style>
+  <div id="app" v-cloak>
+    <div class="zjban">
+      <el-image :src="'https://xcx.sztjyy.cn/gh/zt/c19/1.jpg'" :onerror="defaultImg"></el-image>
+    </div>
+    <div class="detailed">
+      <h5><img src="https://xcx.sztjyy.cn/gh/images/d1.png" alt="">预约时间</h5>
+      <p>每日随时预约，可预约4日内的核酸检测。</p>
+      <h5><img src="https://xcx.sztjyy.cn/gh/images/d1.png" alt="">采样时间</h5>
+      <p>上午10:00-11:00，下午13:50-14:50。</p>
+      <h5><img src="https://xcx.sztjyy.cn/gh/images/d1.png" alt="">采集地址</h5>
+      <p>医院东侧急诊发热门诊--核酸采样点</p>
+    </div>
+    <el-form class="bd" label-position="right">
+      <el-form-item label="">
+        <el-input id="tj_name" v-model="name" placeholder="请输入您的姓名"></el-input>
+      </el-form-item>
+      <el-form-item label="">
+        <el-input id="tj_tel" type="number" v-model="tel" minlength="7" placeholder="请输入您的电话号码"></el-input>
+      </el-form-item>
+      <el-form-item label="">
+        <el-input id="tj_keshi" value="核酸采集门诊" readonly></el-input>
+      </el-form-item>
+      <el-form-item label="">
+        <el-input id="tj_time" readonly placeholder="请选择预约日期" suffix-icon="el-icon-date" v-model="uday"
+          @focus="dialogVisible = true">
+        </el-input>
+      </el-form-item>
+
+      <input type="hidden" name="tag" id="tag" v-model="tag" />
+      <p class="bd-p"><img src="https://xcx.sztjyy.cn/gh/images/lock.png" alt="" /> 隐私保护</p>
+      <el-row type="flex" justify="space-between">
+        <a class="submit-back" href="/gh/list.html">返回上页</a>
+        <input type="button" value="提交挂号" class="submit-form submit-form-width" @click="submitForm()" />
+      </el-row>
+    </el-form>
+    <p class="tips" style="margin: 0 2.5rem 2rem;">
+      <strong>*温馨提示</strong><br />
+        1. 核酸“愿检尽检”采集属于自费。<br />
+		2. 请务必携带本人身份证，出示手机预约成功信息并扫健康码，流调，登记后方可进院。<br />
+		3. 针对人群：仅对无发热、无症状、无流行病学史的自愿检测的居民。发热患者（体温 ≥ 37.3℃）请到发热门诊就诊。<br />
+		4. 采集前2小时禁止进食。<br />
+		5. 检测报告可关注我院公众号“sz_tjyy”查询。<br />
+		6. 电子版报告查询时间：24-72小时以后可查询检测结果。<br />
+		7. 若有不明事项请拨打电话（0512-68111999）咨询。<br />
+    </p>
+    <img class="allied" src="https://xcx.sztjyy.cn/gh/images/dw.png" alt="" />
+    <el-dialog title="选择预约日期" :visible.sync="dialogVisible">
+      <el-calendar>
+        <template slot="dateCell" slot-scope="{date, data}">
+          <div v-if="handleSelected(data.day) === 'all'" class="optional-date"
+            :class="data.day == uday ? 'selected-day' : ''" @click="selectedDay(data.day)">
+            {{ data.day.split('-').slice(2).join('-') }}
+            <p>{{ data.day == uday ? '已选' : ''}}</p>
+          </div>
+          <div v-else>
+            {{ data.day.split('-').slice(2).join('-') }}
+          </div>
+        </template>
+      </el-calendar>
+    </el-dialog>
+
+    <div class="bottom">
+      <a class="home" href="/gh/list_xcx.html">
+        <img src="https://xcx.sztjyy.cn/gh/images/home.png" alt=""> 首 页</a>
+      <a class="tx" href="/gh/list_xcx.html">
+        <img src="https://xcx.sztjyy.cn/gh/images/tx.png" alt=""> 特需专家号</a>
+      <a class="pt" href="/gh/list.html">
+        <img src="https://xcx.sztjyy.cn/gh/images/pt.png" alt=""> 专科专诊号</a>
+    </div>
+  </div>
+  <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
+  <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
+  
+  <script src="https://xcx.sztjyy.cn/gh/js/ghApi.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        defaultImg: 'this.src="https://xcx.sztjyy.cn/gh/zt/c19/1.jpg"', //默认图
+        zj: '',
+        yyzj: '',
+        name: '', //姓名
+        tel: '', //电话
+        uday: '', //预约日期
+        keshi: '妇科', //预约科室
+        dialogVisible: false, //选择日期窗
+        tag: ''    //小程序标签
+      },
+      mounted() {
+        var url = window.location.href
+        var dz_url = url.split('#')[0] //获取#之前的字符串
+        var cs = dz_url.split('?')[1] //获取?之后的参数字符串
+        if (cs) {
+          var cs_arr = cs.split('&') //参数字符串分割为数组
+          var cs = {}
+          for (var i = 0; i < cs_arr.length; i++) {
+            //遍历数组，拿到json对象
+            cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+          }
+          if (cs.date) {
+            this.uday = new Date().getFullYear() + '-' + cs.date
+          }
+          this.keshi = decodeURI(cs.keshi)
+          this.tag = cs.tag
+
+          $('.home').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+          $('.pt').attr("href", "/gh/list.html?tag=" + cs.tag)
+          $('.tx').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
+
+        } else { cs = {} }
+
+      },
+      methods: {
+        //点击选择日期框后
+        handleSelected(day) {
+          var today = new Date().getDate()
+          var thisDay = new Date(day).getDate()
+          if (today <= thisDay) {
+            return 'all'
+          } else {
+            return false
+          }
+        },
+        //选择日期
+        selectedDay(day) {
+          this.uday = day
+          this.dialogVisible = false
+        },
+        alertMsg(msg) {
+          this.$message({
+            message: msg,
+            type: 'warning',
+            showClose: true,
+            offset: 180
+          });
+        },
+        submitForm() {
+          //姓名
+          var uname = this.name
+          if (uname == '') {
+            $('#tj_name').focus()
+            this.alertMsg('请输入您的姓名!')
+            return false
+          }
+          //预约手机
+          var uphone = this.tel
+          if (uphone != '') {
+            if (/^1[3456789]\d{9}$/.test(uphone) == false) {
+              this.alertMsg('请输入您的正确联系方式！')
+              return false
+            }
+          } else {
+            $('#tj_tel').focus()
+            this.alertMsg('请输入联系方式！')
+            return false
+          }
+          //预约时间
+          var yyday = this.uday
+          if (yyday == '') {
+            this.alertMsg('请选择预约时间！')
+            return false
+          }
+          var myData = {
+            uname: uname, uphone: uphone, yyday: yyday,
+            yyks: this.keshi,
+          }
+          var that = this;
+          $.ajaxGuahao(myData,
+            function (data) {//成功
+              console.log(data)
+              that.$message({ message: '提示：预约信息提交成功！咨询员会尽快为您服务！', type: 'success' });
+              window.location.href = "https://xcx.sztjyy.cn/wx/index.html"
+            }, function (data) {//失败
+              console.log(data)
+              that.$message({ message: '提示：预约信息提交失败！请联系客服！', type: 'warning' });
+            })
+          return true;
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>
