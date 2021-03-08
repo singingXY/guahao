@@ -65,7 +65,8 @@
       <template v-for="(date,index) in zzTime">
         <p v-if="currentIndex===index">
           挂号日期：<span v-if="time == ''" style="color: #aaa;">请点击选择挂号日期</span>
-          <span v-else>{{time}}</span>
+          <span v-else>{{time}} </span>
+          <span v-if="zj == 'qianqihong'" style="color: #ff5722;"> 下午13:00-15:00</span>
         </p>
       </template>
       <el-form-item label="" style="display: none;">
