@@ -11,7 +11,7 @@
   <title>苏州同济医院_同济官网在线预约</title>
   <script src="https://xcx.sztjyy.cn/gh/js/jquery.min.js"></script>
   <script src="https://xcx.sztjyy.cn/gh/js/vue@2.6.11.js"></script>
-  <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet"/>
+  <link href="https://xcx.sztjyy.cn/gh/js/element-ui.css" rel="stylesheet" />
   <link href="https://xcx.sztjyy.cn/gh/layout.css" rel="stylesheet" type="text/css" />
   <script src="https://xcx.sztjyy.cn/gh/js/element-ui.js"></script>
   <script src="https://xcx.sztjyy.cn/gh/js/rem.js"></script>
@@ -26,20 +26,24 @@
     <h5 class="title">苏州同济医院预约挂号中心</h5>
     <el-form class="bd" label-position="right">
       <el-form-item label="">
-        <el-input  id="tj_name" v-model="name" placeholder="请输入您的姓名"></el-input>
+        <el-input id="tj_name" v-model="name" placeholder="请输入您的姓名"></el-input>
       </el-form-item>
       <el-form-item label="">
         <el-input id="tj_tel" type="number" v-model="tel" minlength="7" placeholder="请输入您的电话号码"></el-input>
       </el-form-item>
       <el-form-item label="">
-        <el-input id="tj_keshi"  v-model="keshi" readonly></el-input>
+        <el-input v-if="skeshi" id="tj_keshi" v-model="keshi" readonly></el-input>
+        <el-select v-else v-model="keshi" placeholder="选择挂号科室">
+          <el-option v-for="ks in ksList" :key="ks" :label="ks" :value="ks">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="">
         <el-input id="tj_time" readonly placeholder="请选择预约日期" suffix-icon="el-icon-date" v-model="uday"
           @focus="dialogVisible = true">
         </el-input>
       </el-form-item>
-      
+
       <input type="hidden" name="tag" id="tag" v-model="tag" />
       <p class="bd-p"><img src="https://xcx.sztjyy.cn/gh/images/lock.png" alt="" /> 隐私保护</p>
       <el-row type="flex" justify="space-between">
@@ -84,7 +88,13 @@
         name: '', //姓名
         tel: '', //电话
         uday: '', //预约日期
+        skeshi: true, //科室输入框
         keshi: '', //预约科室
+        ksList: ['康复医学科', '老年科', '神经内科', '心血管内科', '呼吸内科', '消化内科', '中医肛肠科',
+          '肿瘤科', '中医科', '中西医结合科', '皮肤科', '腋臭门诊', '泌尿外科', '男性科',
+          '普外科', '疝气门诊', '减重门诊', '结石门诊', '妇科', '计划生育门诊', '围绝经期门诊',
+          '不孕门诊', '乳腺科', '内分泌科', '耳鼻咽喉科', '眼科', '骨科', '口腔科', '肝胆内科', '体检科'
+        ], //科室选择列表
         dialogVisible: false, //选择日期窗
         tag: ''    //小程序标签
       },
@@ -106,6 +116,9 @@
           $('.pt').attr("href", "/gh/list.html?tag=" + cs.tag)
           $('.tx').attr("href", "/gh/list_xcx.html?tag=" + cs.tag)
         } else { cs = {} }
+        if (!this.keshi || this.keshi == '') {
+          this.skeshi = false
+        }
       },
       methods: {
         //点击选择日期框后
