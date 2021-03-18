@@ -323,7 +323,8 @@
     var pageData = [];
     var zj;
     for (zj in profile) {
-      if (profile[zj].department == keShi) {
+	  var depart = profile[zj].department.split(';')
+      if (depart[0] == keShi || depart[1] == keShi) {
         pageData.push(profile[zj]);
       }
     }
